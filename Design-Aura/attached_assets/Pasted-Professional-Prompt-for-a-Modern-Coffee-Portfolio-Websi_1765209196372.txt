@@ -1,0 +1,238 @@
+Professional Prompt for a Modern Coffee Portfolio Website (Premium, Cozy, Human-Made Aesthetic)
+Project Overview
+
+Create a high-end, modern, cozy, and immersive Coffee Portfolio Website designed to present coffee as an art form, a cultural experience, and a storytelling journey — not a commercial brand website.
+
+The goal is to deliver a museum-quality digital experience that feels handcrafted, warm, and authentic — with animations and design that feel professionally crafted, not AI-generated.
+
+1. Design Philosophy & Visual Aesthetics
+Overall Style
+
+Modern, warm, deeply aesthetic, and editorial.
+
+A “digital coffee museum” vibe with artful curation.
+
+Luxurious but minimal — no clutter, only intentional elements.
+
+Color Palette
+
+Coffee-inspired warm tones:
+Deep espresso browns, cream beige, roasted caramel, muted olive/forest green, soft latte whites.
+
+Subtle gradients for depth.
+
+Background tones with fine grain textures for a handcrafted feel.
+
+Typography
+
+Elegant serif headings (editorial style).
+
+Clean geometric sans-serif body text.
+
+Large hero titles with smooth fade-in strokes.
+
+Perfect readability and high contrast.
+
+Imagery & Illustrations
+
+High-quality lifestyle photography of coffee, beans, tools, and café ambience.
+
+Hand-drawn accents or minimal line illustrations.
+
+Realistic textures: wood, ceramic, raw coffee beans, paper fibers.
+
+Human-Made Aesthetic
+
+Avoid anything that looks “AI-generated”.
+
+Use natural imperfections, organic shapes, soft shadows, and layered depth.
+
+2. Animation & Interaction Requirements (Pro-Level, Smooth, Premium)
+Core Animation Style
+
+Cinematic, buttery smooth, intentional.
+
+All animations must feel natural, physics-based, and lightweight.
+
+Required Animations:
+1. Smooth Scroll Reveal Animations
+
+Text and images slide, fade, or scale into view.
+
+Delayed stagger effects for elegance.
+
+GSAP or Framer Motion recommended.
+
+2. Parallax 3D Layered Motion
+
+Backgrounds, coffee beans, and illustrations move at different speeds.
+
+Multi-layer depth to create a 3D storytelling experience.
+
+3. Liquid / Morphing Blob Backgrounds
+
+Organic, slow-moving blobs used as:
+
+Section transitions
+
+Hero background
+
+Highlight elements
+
+Very subtle, elegant, non-distracting.
+
+4. Magnetic Hover Interactions
+
+Buttons, icons, coffee beans, or images follow cursor gravity.
+
+Smooth, elastic interaction when hovering near elements.
+
+5. Micro-Interactions
+
+Button hover ripple, soft scaling, color shifts.
+
+Coffee cards tilt slightly with cursor.
+
+Icons animate subtly when interacted with.
+
+6. Smooth Page Transitions
+
+Fade between sections.
+
+Slide transitions with blur.
+
+Consistent flow to maintain immersion.
+
+3. Website Content Structure (Premium Storytelling)
+Hero Section
+
+Full-screen hero image/video of brewing coffee.
+
+Parallax steam rising subtly.
+
+Morphing blobs behind title.
+
+Magnetic hover on “Explore Coffee” button.
+
+Minimal, luxurious headline text.
+
+Coffee Types Section
+
+Grid or carousel of coffee types (Espresso, Latte, Cappuccino, Pour-over, etc.).
+
+Each card includes:
+
+Photo
+
+Short description
+
+Smooth hover tilt
+
+Small micro-animation on click
+
+Cards slide into view with stagger effect.
+
+World’s Top Coffee Beans
+
+Interactive world map with parallax motion.
+
+Clickable origins (Ethiopia, Colombia, Kenya, etc.).
+
+High-res bean texture photos.
+
+Storytelling layout: growing conditions, altitude, flavor notes.
+
+Brewing Techniques Section
+
+Step-by-step brewing visuals animated as user scrolls.
+
+French press, pour-over, espresso, cold brew, etc.
+
+Smooth scroll-triggered illustrations.
+
+Light sound effects optional (steam, pour, grind).
+
+Harvesting & Sourcing Section
+
+Animated global map timeline.
+
+Parallax images of plantations, farmers, handpicking.
+
+Morphing blobs behind region visuals.
+
+Elegant documentary-like storytelling.
+
+Coffee Culture Section
+
+Large typography blocks.
+
+Smooth text reveal animations.
+
+Photos and illustrations layered with parallax offset.
+
+Cozy, narrative storytelling tone.
+
+Contact / Subscribe Section
+
+Warm minimal form.
+
+Magnetic submit button.
+
+Soft ripple or micro-interaction when interacting.
+
+Subtle gradient/morphing shape background.
+
+4. Technical Implementation Requirements
+Performance
+
+Fully responsive across mobile, tablet, and desktop.
+
+Lazy loading for media.
+
+Optimized scripts and minimal blocking.
+
+Perfectly smooth scroll and animations.
+
+Tech Stack Suggestions
+
+GSAP for scroll animations + parallax.
+
+Framer Motion for interactions & component animations.
+
+Three.js for subtle 3D depth or object layers.
+
+Locomotive Scroll or Lenis for smooth scrolling.
+
+UX & Accessibility
+
+High contrast ratios.
+
+Keyboard navigable.
+
+Screen-reader friendly text content.
+
+Large tap targets on mobile.
+
+5. Final Goal (The Main Vision)
+
+Create a professional, immersive, handcrafted, coffee-themed portfolio website that feels:
+
+Warm
+
+Cozy
+
+Elegant
+
+Human-made
+
+Aesthetic
+
+Story-driven
+
+Premium and modern
+
+Filled with cinematic, buttery animations
+
+Beautifully polished with perfect attention to detail
+
+The website should look like it was designed by a top-tier creative studio, blending storytelling, modern UI/UX, and high-quality coffee culture content — not AI-generated, but artistically crafted.
