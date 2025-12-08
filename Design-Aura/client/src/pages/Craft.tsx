@@ -1,14 +1,21 @@
 import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, Droplet, Thermometer, Timer, Gauge } from "lucide-react";
+import { ArrowLeft, Droplet, Thermometer, Timer, Gauge, Coffee, Play } from "lucide-react";
 import { Link } from "wouter";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
-import BlurText from "@/components/BlurText";
+import SplitText from "@/components/reactbits/SplitText";
+import GradientText from "@/components/reactbits/GradientText";
+import FloatingParticles from "@/components/reactbits/FloatingParticles";
+import ShinyButton from "@/components/reactbits/ShinyButton";
+import TextReveal from "@/components/reactbits/TextReveal";
+import StaggeredGrid from "@/components/reactbits/StaggeredGrid";
+import CountUp from "@/components/reactbits/CountUp";
+import ClickSpark from "@/components/reactbits/ClickSpark";
+
 import espressoImg1 from "@assets/stock_images/espresso_extraction__3527e77f.jpg";
 import espressoImg2 from "@assets/stock_images/espresso_extraction__b0ed6eed.jpg";
 import espressoMachineImg from "@assets/stock_images/espresso_machine_por_6d4bd314.jpg";
-import roastingImg from "@assets/stock_images/coffee_roasting_proc_0ed4137b.jpg";
 
 const extractionPhases = [
   {
@@ -32,10 +39,10 @@ const extractionPhases = [
 ];
 
 const craftMetrics = [
-  { icon: Thermometer, label: "Temperature", value: "93°C", description: "Optimal extraction temperature" },
-  { icon: Gauge, label: "Pressure", value: "9 bar", description: "Industry standard pressure" },
-  { icon: Timer, label: "Time", value: "25-30s", description: "Perfect shot duration" },
-  { icon: Droplet, label: "Yield", value: "36ml", description: "Double shot volume" }
+  { icon: Thermometer, label: "Temperature", value: 93, suffix: "°C", description: "Optimal extraction temperature" },
+  { icon: Gauge, label: "Pressure", value: 9, suffix: " bar", description: "Industry standard pressure" },
+  { icon: Timer, label: "Time", value: 25, suffix: "s", description: "Perfect shot duration" },
+  { icon: Droplet, label: "Yield", value: 36, suffix: "ml", description: "Double shot volume" }
 ];
 
 export default function Craft() {
@@ -54,8 +61,9 @@ export default function Craft() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-white overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden">
       <LiquidBackground />
+      <FloatingParticles count={20} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
       
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
@@ -67,7 +75,7 @@ export default function Craft() {
           <Link href="/">
             <Magnetic>
               <motion.div 
-                className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors cursor-pointer group"
+                className="flex items-center gap-3 text-foreground/80 hover:text-primary transition-colors cursor-pointer group"
                 whileHover={{ x: -5 }}
               >
                 <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
@@ -76,7 +84,7 @@ export default function Craft() {
             </Magnetic>
           </Link>
           
-          <span className="text-2xl font-serif font-bold tracking-tighter text-white">
+          <span className="text-2xl font-serif font-semibold tracking-tight text-foreground">
             Roots<span className="text-primary">.</span>
           </span>
         </div>
@@ -103,22 +111,22 @@ export default function Craft() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-primary text-sm tracking-[0.3em] uppercase mb-6 block"
+            className="text-primary/80 text-sm tracking-[0.3em] uppercase mb-6 block font-medium"
           >
             The Science & Art
           </motion.span>
           
-          <BlurText 
-            text="The Extraction" 
-            className="text-6xl md:text-8xl lg:text-9xl font-serif text-white mb-6"
-            delay={0.1}
-          />
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6">
+            <SplitText text="The" className="text-foreground" delay={0.1} />
+            {" "}
+            <GradientText text="Extraction" className="text-6xl md:text-8xl lg:text-9xl font-serif" />
+          </h1>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="text-white/70 text-xl max-w-2xl mx-auto leading-relaxed"
+            className="text-foreground/60 text-xl max-w-2xl mx-auto leading-relaxed"
           >
             A macro study of espresso mechanics, fluid dynamics, and the pursuit of the perfect shot.
           </motion.p>
@@ -133,9 +141,9 @@ export default function Craft() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2"
+            className="w-6 h-10 rounded-full border-2 border-foreground/30 flex justify-center pt-2"
           >
-            <motion.div className="w-1 h-2 bg-white/50 rounded-full" />
+            <motion.div className="w-1 h-2 bg-foreground/50 rounded-full" />
           </motion.div>
         </motion.div>
       </section>
@@ -149,25 +157,25 @@ export default function Craft() {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center mb-20"
           >
-            <span className="text-primary text-sm tracking-[0.2em] uppercase mb-4 block">The Variables</span>
-            <h2 className="text-4xl md:text-5xl font-serif mb-8">
-              Precision in Every <span className="text-primary">Parameter</span>
+            <span className="text-primary/70 text-sm tracking-[0.2em] uppercase mb-4 block font-medium">The Variables</span>
+            <h2 className="text-4xl md:text-5xl font-serif mb-8 text-foreground">
+              Precision in Every <GradientText text="Parameter" />
             </h2>
-            <p className="text-white/70 text-xl leading-relaxed">
-              Great espresso is a balance of science and intuition. Every variable—temperature, 
-              pressure, grind size, time—must harmonize to create liquid gold.
-            </p>
+            <TextReveal 
+              text="Great espresso is a balance of science and intuition. Every variable - temperature, pressure, grind size, time - must harmonize to create liquid gold."
+              className="text-foreground/60 text-xl leading-relaxed"
+            />
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {craftMetrics.map((metric, index) => (
-              <MetricCard key={metric.label} metric={metric} index={index} />
+          <StaggeredGrid className="grid grid-cols-2 md:grid-cols-4 gap-6" stagger={0.1}>
+            {craftMetrics.map((metric) => (
+              <MetricCard key={metric.label} metric={metric} />
             ))}
-          </div>
+          </StaggeredGrid>
         </div>
       </section>
 
-      <section className="py-32 relative z-10 bg-gradient-to-b from-transparent via-black/20 to-transparent">
+      <section className="py-32 relative z-10 bg-gradient-to-b from-transparent via-black/10 to-transparent">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -176,9 +184,9 @@ export default function Craft() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <span className="text-primary text-sm tracking-[0.2em] uppercase mb-4 block">The Process</span>
-            <h2 className="text-4xl md:text-6xl font-serif">
-              Anatomy of <span className="text-primary">Extraction</span>
+            <span className="text-primary/70 text-sm tracking-[0.2em] uppercase mb-4 block font-medium">The Process</span>
+            <h2 className="text-4xl md:text-6xl font-serif text-foreground">
+              Anatomy of <GradientText text="Extraction" />
             </h2>
           </motion.div>
 
@@ -202,41 +210,32 @@ export default function Craft() {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              <span className="text-primary text-sm tracking-[0.2em] uppercase">The Philosophy</span>
-              <h2 className="text-4xl md:text-5xl font-serif leading-tight">
+              <span className="text-primary/70 text-sm tracking-[0.2em] uppercase font-medium">The Philosophy</span>
+              <h2 className="text-4xl md:text-5xl font-serif leading-tight text-foreground">
                 Where Science <br />
-                <span className="text-primary">Meets Art</span>
+                <GradientText text="Meets Art" />
               </h2>
-              <p className="text-white/70 text-lg leading-relaxed">
-                The perfect espresso shot is fleeting—existing for mere seconds before the crema 
-                begins to dissipate. We capture these moments through macro photography and 
-                high-speed video, revealing the hidden beauty of fluid dynamics.
-              </p>
-              <p className="text-white/70 text-lg leading-relaxed">
+              <TextReveal 
+                text="The perfect espresso shot is fleeting - existing for mere seconds before the crema begins to dissipate. We capture these moments through macro photography and high-speed video, revealing the hidden beauty of fluid dynamics."
+                className="text-foreground/60 text-lg leading-relaxed"
+              />
+              <p className="text-foreground/60 text-lg leading-relaxed">
                 Each image tells a story of pressure, temperature, and timing. The tiger stripes 
                 in the pour, the texture of the crema, the way light plays through the stream—
                 these are the visual signatures of craft mastered.
               </p>
-              <div className="grid grid-cols-2 gap-6 pt-8 border-t border-white/10">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <span className="text-4xl font-serif text-primary block mb-2">1000+</span>
-                  <span className="text-white/50 text-sm uppercase tracking-wider">Shots Documented</span>
+              <StaggeredGrid className="grid grid-cols-2 gap-6 pt-8 border-t border-foreground/10" stagger={0.1}>
+                <motion.div whileHover={{ y: -3 }}>
+                  <span className="text-4xl font-serif text-primary block mb-2">
+                    <CountUp to={1000} suffix="+" />
+                  </span>
+                  <span className="text-foreground/40 text-sm uppercase tracking-wider">Shots Documented</span>
                 </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
+                <motion.div whileHover={{ y: -3 }}>
                   <span className="text-4xl font-serif text-primary block mb-2">4K</span>
-                  <span className="text-white/50 text-sm uppercase tracking-wider">Macro Resolution</span>
+                  <span className="text-foreground/40 text-sm uppercase tracking-wider">Macro Resolution</span>
                 </motion.div>
-              </div>
+              </StaggeredGrid>
             </motion.div>
           </div>
         </div>
@@ -251,23 +250,22 @@ export default function Craft() {
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl md:text-5xl font-serif mb-8">
-              Master Your <span className="text-primary">Craft</span>
+            <h2 className="text-4xl md:text-5xl font-serif mb-8 text-foreground">
+              Master Your <GradientText text="Craft" />
             </h2>
-            <p className="text-white/70 text-xl mb-12 leading-relaxed">
+            <p className="text-foreground/60 text-xl mb-12 leading-relaxed">
               Ready to elevate your espresso game? Explore our visual guides and 
               tutorials designed for both beginners and seasoned baristas.
             </p>
-            <Link href="/">
-              <Magnetic>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-10 py-4 bg-primary text-black font-medium rounded-full hover:bg-primary/90 transition-colors"
-                >
-                  View More Projects
-                </motion.button>
-              </Magnetic>
+            <Link href="/process">
+              <ClickSpark sparkColor="#D4A574">
+                <Magnetic>
+                  <ShinyButton>
+                    <Play className="w-5 h-5" />
+                    Watch the Process
+                  </ShinyButton>
+                </Magnetic>
+              </ClickSpark>
             </Link>
           </motion.div>
         </div>
@@ -276,28 +274,24 @@ export default function Craft() {
   );
 }
 
-function MetricCard({ metric, index }: { metric: typeof craftMetrics[0]; index: number }) {
+function MetricCard({ metric }: { metric: typeof craftMetrics[0] }) {
   const Icon = metric.icon;
   
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -5, scale: 1.02 }}
-      className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm text-center group cursor-pointer"
+      whileHover={{ y: -5 }}
+      className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 transition-all duration-300 text-center group"
     >
-      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-        <Icon className="w-6 h-6 text-primary" />
+      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+        <Icon className="w-6 h-6 text-primary group-hover:text-primary-foreground" />
       </div>
-      <span className="text-3xl font-serif text-white block mb-1 group-hover:text-primary transition-colors">
-        {metric.value}
+      <span className="text-3xl font-serif text-foreground block mb-1 group-hover:text-primary transition-colors">
+        <CountUp to={metric.value} suffix={metric.suffix} />
       </span>
-      <span className="text-primary text-sm uppercase tracking-wider block mb-2">
+      <span className="text-primary/70 text-sm uppercase tracking-wider block mb-2">
         {metric.label}
       </span>
-      <p className="text-white/50 text-xs">
+      <p className="text-foreground/40 text-xs">
         {metric.description}
       </p>
     </motion.div>
@@ -327,15 +321,15 @@ function PhaseCard({ phase, index, total }: { phase: typeof extractionPhases[0];
         </div>
         
         <div className="flex-1 space-y-4">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <span className="md:hidden text-primary font-serif text-2xl">{index + 1}.</span>
-            <h3 className="text-2xl md:text-3xl font-serif text-white">{phase.phase}</h3>
-            <span className="px-3 py-1 bg-white/10 rounded-full text-xs text-white/70">{phase.time}</span>
+            <h3 className="text-2xl md:text-3xl font-serif text-foreground">{phase.phase}</h3>
+            <span className="px-3 py-1 bg-white/10 rounded-full text-xs text-foreground/70">{phase.time}</span>
           </div>
-          <p className="text-white/70 text-lg leading-relaxed max-w-2xl">
+          <p className="text-foreground/60 text-lg leading-relaxed max-w-2xl">
             {phase.description}
           </p>
-          <p className="text-primary/80 italic text-sm">
+          <p className="text-primary/70 italic text-sm">
             "{phase.visual}"
           </p>
         </div>
@@ -365,7 +359,7 @@ function ParallaxGallery() {
     >
       <motion.div
         style={{ y: y1 }}
-        className="absolute top-0 left-0 w-2/3 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+        className="absolute top-0 left-0 w-2/3 aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl"
       >
         <img 
           src={espressoImg2} 
@@ -376,7 +370,7 @@ function ParallaxGallery() {
       
       <motion.div
         style={{ y: y2 }}
-        className="absolute bottom-0 right-0 w-2/3 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl"
+        className="absolute bottom-0 right-0 w-2/3 aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl"
       >
         <img 
           src={espressoMachineImg} 

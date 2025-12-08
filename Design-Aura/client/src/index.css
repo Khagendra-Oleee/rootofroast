@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -23,9 +24,13 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
+  --color-terracotta: hsl(var(--terracotta));
+  --color-moss: hsl(var(--moss));
+  --color-cream: hsl(var(--cream));
+  --color-caramel: hsl(var(--caramel));
 
-  --font-sans: 'DM Sans', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -33,43 +38,49 @@
 }
 
 :root {
-  /* Coffee Palette */
-  /* Deep Espresso Brown Background */
-  --background: 30 15% 10%;
-  /* Soft Latte White Text */
-  --foreground: 40 20% 90%;
+  /* Human-Centric Warm Palette */
+  /* Deep Rich Espresso */
+  --background: 20 25% 8%;
+  /* Warm Cream Text */
+  --foreground: 38 30% 88%;
 
-  /* Darker Brown for Cards */
-  --card: 30 15% 13%;
-  --card-foreground: 40 20% 90%;
+  /* Warmer Card Surfaces */
+  --card: 22 20% 11%;
+  --card-foreground: 38 30% 88%;
 
-  --popover: 30 15% 13%;
-  --popover-foreground: 40 20% 90%;
+  --popover: 22 20% 11%;
+  --popover-foreground: 38 30% 88%;
 
-  /* Roasted Caramel for Primary Actions */
-  --primary: 35 50% 60%;
-  --primary-foreground: 30 15% 10%;
+  /* Warm Caramel Gold Primary */
+  --primary: 32 65% 55%;
+  --primary-foreground: 20 25% 8%;
 
-  /* Muted Olive Green for Secondary */
-  --secondary: 80 20% 30%;
-  --secondary-foreground: 40 20% 90%;
+  /* Organic Moss Green Secondary */
+  --secondary: 85 25% 35%;
+  --secondary-foreground: 38 30% 88%;
 
-  /* Muted Brown */
-  --muted: 30 10% 20%;
-  --muted-foreground: 30 10% 60%;
+  /* Soft Muted Earth */
+  --muted: 25 15% 18%;
+  --muted-foreground: 30 15% 55%;
 
-  /* Subtle Warmth */
-  --accent: 30 15% 18%;
-  --accent-foreground: 40 20% 90%;
+  /* Terracotta Accent */
+  --accent: 15 45% 40%;
+  --accent-foreground: 38 30% 88%;
 
-  --destructive: 0 62% 30%;
-  --destructive-foreground: 40 20% 90%;
+  --destructive: 0 55% 40%;
+  --destructive-foreground: 38 30% 88%;
 
-  --border: 30 15% 20%;
-  --input: 30 15% 20%;
-  --ring: 35 50% 60%;
+  --border: 25 18% 22%;
+  --input: 25 18% 22%;
+  --ring: 32 65% 55%;
 
-  --radius: 0.5rem;
+  /* Extended Organic Colors */
+  --terracotta: 15 50% 48%;
+  --moss: 95 30% 38%;
+  --cream: 40 45% 92%;
+  --caramel: 28 70% 50%;
+
+  --radius: 0.625rem;
 }
 
 body {
@@ -123,4 +134,15 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* Gradient Animation for React Bits components */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
 }

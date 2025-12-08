@@ -1,8 +1,12 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Link } from "wouter";
 import brewImg from "@assets/stock_images/pour_over_coffee_bre_f56adaca.jpg";
-import { Droplets, Clock, Thermometer } from "lucide-react";
+import { Droplets, Clock, Thermometer, ArrowRight } from "lucide-react";
 import TiltCard from "./TiltCard";
+import ShinyButton from "./reactbits/ShinyButton";
+import GradientText from "./reactbits/GradientText";
+import ClickSpark from "./reactbits/ClickSpark";
 
 const steps = [
   {
@@ -67,9 +71,9 @@ export default function BrewingGuide() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-5xl md:text-6xl font-serif text-white mb-10 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-serif text-foreground mb-10 leading-tight">
                 Mastering the <br />
-                <span className="text-primary italic">Perfect Pour</span>
+                <GradientText text="Perfect Pour" className="text-5xl md:text-6xl font-serif italic" />
               </h2>
   
               <div className="space-y-10">
@@ -92,13 +96,14 @@ export default function BrewingGuide() {
                 ))}
               </div>
   
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-16 px-10 py-4 border border-white/20 text-white rounded-full hover:bg-white hover:text-black transition-all text-sm tracking-widest uppercase font-medium"
-              >
-                Explore Process
-              </motion.button>
+              <Link href="/process">
+                <ClickSpark sparkColor="#D4A574">
+                  <ShinyButton className="mt-16">
+                    Explore Process
+                    <ArrowRight className="w-5 h-5" />
+                  </ShinyButton>
+                </ClickSpark>
+              </Link>
             </motion.div>
           </div>
         </div>

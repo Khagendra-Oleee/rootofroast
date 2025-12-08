@@ -48,10 +48,8 @@ export default function Navigation() {
         }`}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <Link href="/">
-            <a className="text-2xl font-serif font-bold tracking-tighter text-foreground cursor-pointer z-50 relative">
-              Roots of Roast<span className="text-primary">.</span>
-            </a>
+          <Link href="/" className="text-2xl font-serif font-bold tracking-tighter text-foreground cursor-pointer z-50 relative">
+            Roots of Roast<span className="text-primary">.</span>
           </Link>
 
           {/* Desktop Nav */}
