@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import TiltCard from "./TiltCard";
-import frenchPressImg from "@assets/stock_images/french_press_coffee__696faa3e.jpg";
+import doppioImg from "@assets/stock_images/doppio_double_espres_9edb1646.jpg";
 import coldBrewImg from "@assets/stock_images/cold_brew_coffee_gla_6a71ee3b.jpg";
-import pourOverImg from "@assets/stock_images/pour_over_coffee_bre_f56adaca.jpg";
+import caffeLatteImg from "@assets/stock_images/caffe_latte_coffee_w_c6ee55c7.jpg";
 import espressoImg from "@assets/stock_images/espresso_machine_por_6d4bd314.jpg";
 import cappuccinoImg from "@assets/stock_images/cappuccino_foam_art__3d050b10.jpg";
 import BlurText from "./BlurText";
@@ -25,10 +25,10 @@ const coffees = [
     intensity: "Medium"
   },
   {
-    id: "pourover",
-    name: "Pour Over",
-    desc: "Hand-poured filter coffee highlighting delicate floral notes.",
-    img: pourOverImg,
+    id: "caffelatte",
+    name: "Caffee Latte",
+    desc: "Smooth espresso with steamed milk, perfect for any time of day.",
+    img: caffeLatteImg,
     intensity: "Light"
   },
   {
@@ -39,10 +39,10 @@ const coffees = [
     intensity: "Medium"
   },
   {
-    id: "frenchpress",
-    name: "French Press",
-    desc: "Full immersion brewing for a rich, heavy body.",
-    img: frenchPressImg,
+    id: "doppio",
+    name: "Doppio",
+    desc: "Double shot of espresso for an intense, bold coffee experience.",
+    img: doppioImg,
     intensity: "High"
   }
 ];
