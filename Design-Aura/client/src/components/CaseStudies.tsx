@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Link } from "wouter";
 import TiltCard from "./TiltCard";
 import farmerImg from "@assets/stock_images/coffee_farmer_handpi_a9511171.jpg";
 import cafeImg from "@assets/stock_images/coffee_shop_ambience_5f0ecb2c.jpg";
@@ -13,7 +14,8 @@ const projects = [
     title: "Ethiopian Harvest",
     description: "Documenting the meticulous hand-picking process in Yirgacheffe.",
     image: farmerImg,
-    year: "2024"
+    year: "2024",
+    link: "/sourcing"
   },
   {
     id: 2,
@@ -21,7 +23,8 @@ const projects = [
     title: "Urban Sanctuary",
     description: "Capturing the warm, community-focused ambience of modern cafes.",
     image: cafeImg,
-    year: "2023"
+    year: "2023",
+    link: "/space"
   },
   {
     id: 3,
@@ -29,7 +32,8 @@ const projects = [
     title: "The Extraction",
     description: "A macro study of espresso mechanics and fluid dynamics.",
     image: espressoImg,
-    year: "2024"
+    year: "2024",
+    link: "/craft"
   }
 ];
 
@@ -70,38 +74,40 @@ export default function CaseStudies() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
               transition={{ duration: 0.8, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <TiltCard className="group cursor-pointer h-full">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-8 bg-card">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
-                  
-                  {/* Overlay Info */}
-                  <div className="absolute top-6 right-6 px-4 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-                    <span className="text-xs font-medium text-white">{project.year}</span>
+              <Link href={project.link}>
+                <TiltCard className="group cursor-pointer h-full">
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-8 bg-card">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                    
+                    {/* Overlay Info */}
+                    <div className="absolute top-6 right-6 px-4 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                      <span className="text-xs font-medium text-white">{project.year}</span>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="space-y-3 relative">
-                  <div className="flex justify-between items-baseline">
-                    <p className="text-primary text-xs uppercase tracking-wider font-medium">{project.category}</p>
-                  </div>
-                  <h3 className="text-3xl font-serif text-white group-hover:text-primary transition-colors">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed max-w-[90%]">{project.description}</p>
                   
-                  <motion.div 
-                    className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.1)" }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </motion.div>
-                </div>
-              </TiltCard>
+                  <div className="space-y-3 relative">
+                    <div className="flex justify-between items-baseline">
+                      <p className="text-primary text-xs uppercase tracking-wider font-medium">{project.category}</p>
+                    </div>
+                    <h3 className="text-3xl font-serif text-white group-hover:text-primary transition-colors">{project.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed max-w-[90%]">{project.description}</p>
+                    
+                    <motion.div 
+                      className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 group-hover:opacity-100 group-hover:bg-primary/20 transition-all"
+                      whileHover={{ scale: 1.2, backgroundColor: "rgba(212,175,55,0.3)" }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </motion.div>
+                  </div>
+                </TiltCard>
+              </Link>
             </motion.div>
           ))}
         </div>
