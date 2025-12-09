@@ -126,62 +126,76 @@ export default function Navigation() {
       </motion.nav>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background lg:hidden"
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 lg:hidden"
+          style={{ 
+            zIndex: 45,
+            backgroundColor: 'hsl(20, 25%, 8%)',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            position: 'fixed'
+          }}
+        >
+          {/* Mobile Menu Content */}
+          <div 
+            className="flex flex-col items-center justify-center"
+            style={{ 
+              height: '100vh',
+              width: '100%',
+              paddingTop: '80px',
+              paddingBottom: '40px'
+            }}
           >
-            {/* Mobile Menu Content */}
-            <div className="h-full w-full flex flex-col pt-20">
-              {/* Navigation Links */}
-              <div className="flex-1 flex flex-col items-center justify-center px-6">
-                <nav className="flex flex-col items-center gap-5 sm:gap-6">
-                  {navLinks.map((link, i) => (
-                    <motion.button
-                      initial={{ y: 30, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.05 + i * 0.05, duration: 0.3 }}
-                      key={link.name}
-                      onClick={() => handleNavClick(link.href)}
-                      className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-foreground hover:text-primary transition-colors active:scale-95"
-                    >
-                      {link.name}
-                    </motion.button>
-                  ))}
-                </nav>
-
-                {/* CTA Button */}
-                <motion.button
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.05 + navLinks.length * 0.05, duration: 0.3 }}
-                  onClick={() => handleNavClick("#contact")}
-                  className="mt-8 sm:mt-10 px-8 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-base sm:text-lg font-medium active:scale-95"
+            {/* Navigation Links */}
+            <nav className="flex flex-col items-center gap-6">
+              {navLinks.map((link) => (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.href)}
+                  className="font-serif font-medium hover:text-primary transition-colors"
+                  style={{ 
+                    fontSize: '28px',
+                    color: 'hsl(38, 30%, 88%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '8px 16px'
+                  }}
                 >
-                  Let's Talk
-                </motion.button>
-              </div>
+                  {link.name}
+                </button>
+              ))}
+            </nav>
 
-              {/* Footer */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.3 }}
-                className="pb-6 sm:pb-8 px-6"
-              >
-                <div className="flex items-center justify-center gap-2 text-foreground/40">
-                  <Coffee className="w-4 h-4" />
-                  <span className="text-xs tracking-wider uppercase">Crafted with passion</span>
-                </div>
-              </motion.div>
+            {/* CTA Button */}
+            <button
+              onClick={() => handleNavClick("#contact")}
+              className="mt-10 px-8 py-3 rounded-full font-medium transition-all duration-300"
+              style={{
+                border: '2px solid hsl(30, 50%, 55%)',
+                color: 'hsl(30, 50%, 55%)',
+                backgroundColor: 'transparent',
+                fontSize: '16px',
+                cursor: 'pointer'
+              }}
+            >
+              Let's Talk
+            </button>
+
+            {/* Footer */}
+            <div 
+              className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-2"
+              style={{ color: 'hsl(38, 30%, 50%)' }}
+            >
+              <Coffee className="w-4 h-4" />
+              <span className="text-xs tracking-wider uppercase">Crafted with passion</span>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </>
   );
 }
