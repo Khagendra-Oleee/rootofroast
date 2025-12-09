@@ -10,66 +10,75 @@ import ClickSpark from "@/components/reactbits/ClickSpark";
 
 const machineCategories = [
   {
-    id: "professional",
-    title: "Professional",
-    subtitle: "Commercial Grade Powerhouses",
-    description: "Built for high-volume cafes and restaurants, these machines deliver consistent excellence shot after shot. Multi-boiler systems, volumetric dosing, and NSF certification make them the backbone of specialty coffee shops worldwide.",
+    id: "espresso-machines",
+    title: "Espresso Machines",
+    subtitle: "The Heart of Coffee Culture",
+    description: "Espresso machines use pressure to force hot water through finely-ground coffee, creating a concentrated shot with rich crema. From pump-driven to lever-operated, these machines range from compact home units to multi-group commercial workhorses that power busy cafes.",
+    image: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=1200&q=80",
+    machines: ["Pump-Driven", "Lever Machines", "Semi-Automatic", "Super-Automatic"],
+    specs: { pressure: "9 bar", temp: "90-96°C", extraction: "25-30 sec" }
+  },
+  {
+    id: "pour-over",
+    title: "Pour Over Equipment",
+    subtitle: "Precision in Simplicity",
+    description: "Pour over brewing offers complete control over every variable—water temperature, pour rate, and bloom time. This method highlights the delicate flavors and origin characteristics of single-origin beans, making it a favorite among specialty coffee enthusiasts.",
     image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80",
-    machines: ["La Marzocco Linea PB", "Slayer Steam EP", "Synesso MVP Hydra"],
-    specs: { pressure: "9-12 bar", output: "200+ cups/day", recovery: "< 3 sec" }
+    machines: ["V60 Dripper", "Chemex", "Kalita Wave", "Origami Dripper"],
+    specs: { ratio: "1:15-17", time: "3-4 min", grind: "Medium-Fine" }
   },
   {
-    id: "semi-professional", 
-    title: "Semi-Professional",
-    subtitle: "Cafe Quality, Home Setting",
-    description: "The sweet spot between commercial capability and home convenience. Dual boilers, E61 group heads, and PID temperature control bring professional results to passionate home baristas.",
+    id: "french-press",
+    title: "Immersion Brewers",
+    subtitle: "Full-Bodied Richness",
+    description: "Immersion brewing steeps coffee grounds directly in water, extracting bold flavors and natural oils. The French Press remains iconic, while newer designs like the AeroPress offer versatility and portability without sacrificing depth of flavor.",
     image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=1200&q=80",
-    machines: ["Rocket Appartamento", "Profitec Pro 600", "ECM Synchronika"],
-    specs: { pressure: "9 bar", warmup: "20-25 min", boiler: "Dual/HX" }
+    machines: ["French Press", "AeroPress", "Clever Dripper", "Siphon Brewer"],
+    specs: { ratio: "1:12-15", time: "4-5 min", grind: "Coarse" }
   },
   {
-    id: "home",
-    title: "Home Espresso",
-    subtitle: "Your Daily Ritual",
-    description: "Accessible entry points into the world of real espresso. These machines prove that exceptional coffee doesn't require a commercial budget—just dedication to the craft.",
-    image: "https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=1200&q=80",
-    machines: ["Gaggia Classic Pro", "Breville Bambino Plus", "Rancilio Silvia"],
-    specs: { pressure: "9-15 bar", warmup: "3-10 min", size: "Compact" }
+    id: "grinders",
+    title: "Coffee Grinders",
+    subtitle: "Where Quality Begins",
+    description: "The grinder is arguably more important than the brewing device itself. Burr grinders provide consistent particle size essential for even extraction, while blade grinders offer affordability. From hand grinders to commercial flat burrs, the right grinder transforms your coffee.",
+    image: "https://images.unsplash.com/photo-1587049016823-69ef9d68bd44?w=1200&q=80",
+    machines: ["Flat Burr", "Conical Burr", "Hand Grinders", "Commercial Mills"],
+    specs: { burrs: "Steel/Ceramic", settings: "40+ steps", retention: "< 1g" }
   },
   {
-    id: "manual",
-    title: "Manual & Lever",
-    subtitle: "Pure Connection",
-    description: "No pumps, no electronics—just you, water, and coffee. Manual espresso makers offer unparalleled control and a meditative brewing experience that connects you directly to the extraction.",
+    id: "cold-brew",
+    title: "Cold Brew Systems",
+    subtitle: "Patience Rewarded",
+    description: "Cold brew extracts coffee slowly using cold or room temperature water over 12-24 hours. The result is a smooth, naturally sweet concentrate with lower acidity. From simple mason jar setups to commercial towers, cold brew equipment suits every scale.",
+    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&q=80",
+    machines: ["Toddy System", "Kyoto Drip Tower", "Filtron", "Immersion Pitchers"],
+    specs: { ratio: "1:8", time: "12-24 hrs", temp: "Cold/Room" }
+  },
+  {
+    id: "moka-pot",
+    title: "Stovetop Brewers",
+    subtitle: "Traditional Craftsmanship",
+    description: "The Moka pot has been an Italian kitchen staple since 1933, producing strong, espresso-style coffee on any stovetop. These aluminum or stainless steel brewers use steam pressure to push water through coffee, creating a rich and intense brew.",
     image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&q=80",
-    machines: ["Flair 58", "Robot Cafelat", "La Pavoni Europiccola"],
-    specs: { pressure: "6-9 bar", power: "Manual", portability: "High" }
-  },
-  {
-    id: "portable",
-    title: "Portable",
-    subtitle: "Espresso Without Boundaries",
-    description: "From mountain peaks to office desks, portable espresso makers liberate your coffee ritual from the kitchen. Hand-powered precision that travels wherever adventure calls.",
-    image: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=1200&q=80",
-    machines: ["Wacaco Picopresso", "1Zpresso J-Max", "AeroPress"],
-    specs: { weight: "< 500g", power: "None", output: "Single shot" }
+    machines: ["Moka Pot", "Percolator", "Turkish Ibrik", "Vietnamese Phin"],
+    specs: { pressure: "1-2 bar", time: "5-7 min", heat: "Stovetop" }
   }
 ];
 
 const equipmentHighlights = [
   {
-    title: "Grinders",
-    description: "The unsung hero of espresso. A quality grinder matters more than the machine itself.",
-    image: "https://images.unsplash.com/photo-1587049016823-69ef9d68bd44?w=800&q=80"
-  },
-  {
-    title: "Accessories", 
-    description: "Tampers, scales, and distribution tools that elevate every extraction.",
+    title: "Scales & Timers",
+    description: "Precision measurement is the foundation of repeatable brewing. Digital scales with built-in timers help dial in the perfect ratio every time.",
     image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80"
   },
   {
-    title: "Milk Tools",
-    description: "Steam wands and pitchers designed for latte art perfection.",
+    title: "Kettles",
+    description: "Gooseneck kettles with temperature control provide the precision pour rate essential for pour-over methods and consistent extraction.",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80"
+  },
+  {
+    title: "Tampers & Tools",
+    description: "Distribution tools, calibrated tampers, and WDT needles ensure even extraction and eliminate channeling in espresso preparation.",
     image: "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800&q=80"
   }
 ];
@@ -158,7 +167,7 @@ export default function Machines() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="text-primary text-sm tracking-[0.3em] uppercase mb-6 block font-medium"
               >
-                The Art of Extraction
+                Tools of the Trade
               </motion.span>
               
               <motion.h1 
@@ -168,7 +177,7 @@ export default function Machines() {
                 className="text-6xl md:text-8xl font-serif mb-8 leading-[0.9]"
               >
                 Coffee<br />
-                <GradientText text="Machines" className="text-6xl md:text-8xl font-serif" />
+                <GradientText text="Equipment" className="text-6xl md:text-8xl font-serif" />
               </motion.h1>
               
               <motion.p
@@ -177,8 +186,8 @@ export default function Machines() {
                 transition={{ delay: 0.7, duration: 0.8 }}
                 className="text-foreground/60 text-lg md:text-xl leading-relaxed max-w-lg"
               >
-                From lever-pulled tradition to precision-engineered innovation. 
-                Exploring the instruments that transform beans into moments.
+                Understanding the different types of coffee machines and brewing equipment 
+                that shape how we experience coffee around the world.
               </motion.p>
             </div>
           </div>
@@ -210,10 +219,10 @@ export default function Machines() {
             className="mb-20"
           >
             <span className="text-primary/60 text-sm tracking-[0.2em] uppercase mb-4 block">
-              Machine Categories
+              Brewing Methods
             </span>
             <h2 className="text-4xl md:text-6xl font-serif">
-              Find Your <GradientText text="Perfect Match" />
+              Types of <GradientText text="Equipment" />
             </h2>
           </motion.div>
 
@@ -277,10 +286,10 @@ export default function Machines() {
                   {activeCategory.description}
                 </p>
 
-                {/* Featured Machines */}
+                {/* Equipment Types */}
                 <div className="mb-10">
                   <span className="text-foreground/40 text-xs uppercase tracking-wider mb-3 block">
-                    Notable Models
+                    Common Types
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {activeCategory.machines.map((machine) => (
@@ -360,12 +369,12 @@ export default function Machines() {
               <Coffee className="w-12 h-12 text-primary mx-auto mb-8" />
               
               <h2 className="text-3xl md:text-5xl font-serif mb-8 leading-tight">
-                "The machine is merely an extension of intention. 
-                <span className="text-primary"> The barista is the artist.</span>"
+                "Great coffee is not about the most expensive equipment. 
+                <span className="text-primary"> It's about understanding your tools.</span>"
               </h2>
               
               <p className="text-foreground/50 text-lg">
-                — Philosophy of Craft
+                — The Craft of Brewing
               </p>
             </motion.div>
           </div>
@@ -436,19 +445,19 @@ export default function Machines() {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-serif mb-4">
-              What <GradientText text="Matters" />
+              Key <GradientText text="Variables" />
             </h2>
             <p className="text-foreground/50 max-w-2xl mx-auto">
-              Understanding the key specifications that define espresso machine performance.
+              Understanding the fundamental variables that affect every brewing method.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: <Gauge className="w-8 h-8" />, title: "Pressure", desc: "9 bars is the gold standard for espresso extraction, creating the crema and body we love." },
-              { icon: <Zap className="w-8 h-8" />, title: "Temperature", desc: "Stability between 90-96°C ensures consistent extraction without burning the coffee." },
-              { icon: <Droplets className="w-8 h-8" />, title: "Boiler Type", desc: "Single, dual, or heat exchanger—each offers different steam and brew capabilities." },
-              { icon: <Coffee className="w-8 h-8" />, title: "Group Head", desc: "The E61 remains iconic, but saturated groups offer superior temperature stability." },
+              { icon: <Gauge className="w-8 h-8" />, title: "Grind Size", desc: "From fine espresso to coarse French press, grind size determines extraction rate and flavor profile." },
+              { icon: <Zap className="w-8 h-8" />, title: "Water Temperature", desc: "Optimal brewing temperature ranges from 90-96°C. Too hot burns, too cold under-extracts." },
+              { icon: <Droplets className="w-8 h-8" />, title: "Brew Ratio", desc: "The coffee-to-water ratio varies by method—1:2 for espresso, 1:15 for pour over, 1:8 for cold brew." },
+              { icon: <Coffee className="w-8 h-8" />, title: "Extraction Time", desc: "Each method has its sweet spot—25 seconds for espresso, 4 minutes for French press." },
             ].map((spec, i) => (
               <motion.div
                 key={spec.title}
