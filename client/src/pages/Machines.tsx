@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeft, ArrowRight, Coffee, Gauge, Zap, Droplets } from "lucide-react";
 import { Link } from "wouter";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
 import GradientText from "@/components/reactbits/GradientText";
 import SplitText from "@/components/reactbits/SplitText";
+import ScrollReveal from "@/components/reactbits/ScrollReveal";
 import ClickSpark from "@/components/reactbits/ClickSpark";
 
 // Import local machine images
@@ -90,45 +91,6 @@ const equipmentHighlights = [
     image: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=800&q=80"
   }
 ];
-
-// Scroll Reveal Animation Component
-function ScrollReveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// Parallax Image Component
-function ParallaxImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-  
-  return (
-    <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.img
-        src={src}
-        alt={alt}
-        style={{ y }}
-        className="w-full h-[120%] object-cover"
-      />
-    </div>
-  );
-}
 
 export default function Machines() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -283,7 +245,8 @@ export default function Machines() {
       {/* Category Showcase */}
       <section className="py-20 md:py-32 relative z-10">
         <div className="container mx-auto px-4 md:px-6">
-          <ScrollReveal>
+          {/* Section Header */}
+          <ScrollReveal direction="up" duration={0.8}>
             <div className="mb-12 md:mb-20">
               <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-3 block">
                 Brewing Methods
@@ -297,7 +260,7 @@ export default function Machines() {
           {/* Category Navigator */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             {/* Image Side */}
-            <ScrollReveal className="lg:col-span-7 relative" delay={0.1}>
+            <ScrollReveal direction="left" delay={0.1} className="lg:col-span-7 relative">
               <motion.div 
                 key={activeCategory.id}
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -313,27 +276,24 @@ export default function Machines() {
                 </div>
                 
                 {/* Floating Specs Card */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="relative md:absolute mt-4 md:mt-0 md:-bottom-8 md:right-6 lg:right-10 bg-card/95 backdrop-blur-md border border-white/10 rounded-2xl p-5 md:p-6 shadow-2xl"
-                >
-                  <div className="flex justify-around md:justify-start gap-6 md:gap-8">
-                    {Object.entries(activeCategory.specs).map(([key, value]) => (
-                      <div key={key} className="text-center">
-                        <span className="text-primary text-lg md:text-xl font-serif block">{value}</span>
-                        <span className="text-foreground/40 text-[10px] md:text-xs uppercase tracking-wider">{key}</span>
-                      </div>
-                    ))}
+                <ScrollReveal direction="up" delay={0.3}>
+                  <div className="relative md:absolute mt-4 md:mt-0 md:-bottom-8 md:right-6 lg:right-10 bg-card/95 backdrop-blur-md border border-white/10 rounded-2xl p-5 md:p-6 shadow-2xl">
+                    <div className="flex justify-around md:justify-start gap-6 md:gap-8">
+                      {Object.entries(activeCategory.specs).map(([key, value]) => (
+                        <div key={key} className="text-center">
+                          <span className="text-primary text-lg md:text-xl font-serif block">{value}</span>
+                          <span className="text-foreground/40 text-[10px] md:text-xs uppercase tracking-wider">{key}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </motion.div>
+                </ScrollReveal>
               </motion.div>
             </ScrollReveal>
 
             {/* Content Side */}
             <div className="lg:col-span-5 mt-12 lg:mt-0">
-              <ScrollReveal delay={0.2}>
+              <ScrollReveal direction="right" delay={0.2}>
                 <motion.div
                   key={activeCategory.id + "-content"}
                   initial={{ opacity: 0, x: 20 }}
@@ -362,102 +322,115 @@ export default function Machines() {
                       Common Types
                     </span>
                     <div className="flex flex-wrap gap-2">
-                      {activeCategory.machines.map((machine) => (
-                        <span 
-                          key={machine}
-                          className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-foreground/70 text-sm hover:border-primary/30 hover:bg-primary/5 transition-colors"
-                        >
-                          {machine}
-                        </span>
+                      {activeCategory.machines.map((machine, idx) => (
+                        <ScrollReveal key={machine} direction="up" delay={0.3 + idx * 0.05}>
+                          <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-foreground/70 text-sm hover:border-primary/30 hover:bg-primary/5 transition-colors">
+                            {machine}
+                          </span>
+                        </ScrollReveal>
                       ))}
                     </div>
                   </div>
 
                   {/* Navigation Arrows */}
-                  <div className="flex gap-4">
-                    <ClickSpark sparkColor="#D4A574">
-                      <motion.button
-                        onClick={prevCategory}
-                        className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black transition-all"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <ArrowLeft className="w-5 h-5" />
-                      </motion.button>
-                    </ClickSpark>
-                    <ClickSpark sparkColor="#D4A574">
-                      <motion.button
-                        onClick={nextCategory}
-                        className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black transition-all"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <ArrowRight className="w-5 h-5" />
-                      </motion.button>
-                    </ClickSpark>
-                  </div>
+                  <ScrollReveal direction="up" delay={0.5}>
+                    <div className="flex gap-4">
+                      <ClickSpark sparkColor="#D4A574">
+                        <motion.button
+                          onClick={prevCategory}
+                          className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black transition-all"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <ArrowLeft className="w-5 h-5" />
+                        </motion.button>
+                      </ClickSpark>
+                      <ClickSpark sparkColor="#D4A574">
+                        <motion.button
+                          onClick={nextCategory}
+                          className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black transition-all"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <ArrowRight className="w-5 h-5" />
+                        </motion.button>
+                      </ClickSpark>
+                    </div>
+                  </ScrollReveal>
                 </motion.div>
               </ScrollReveal>
             </div>
           </div>
 
           {/* Category Dots */}
-          <div className="flex justify-center gap-3 mt-16 md:mt-20">
-            {machineCategories.map((cat, i) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveIndex(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === activeIndex 
-                    ? "w-10 md:w-14 bg-primary" 
-                    : "w-5 md:w-7 bg-white/20 hover:bg-white/40"
-                }`}
-              />
-            ))}
-          </div>
+          <ScrollReveal direction="up" delay={0.6}>
+            <div className="flex justify-center gap-3 mt-16 md:mt-20">
+              {machineCategories.map((cat, i) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveIndex(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === activeIndex 
+                      ? "w-10 md:w-14 bg-primary" 
+                      : "w-5 md:w-7 bg-white/20 hover:bg-white/40"
+                  }`}
+                />
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Quote Section */}
       <section className="relative py-24 md:py-40 overflow-hidden">
-        <ParallaxImage 
-          src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1920&q=80"
-          alt="Coffee brewing"
-          className="absolute inset-0 opacity-20"
-        />
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1920&q=80"
+            alt="Coffee brewing"
+            className="w-full h-full object-cover opacity-20"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background" />
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <ScrollReveal className="max-w-4xl mx-auto text-center">
-            <Coffee className="w-12 h-12 md:w-14 md:h-14 text-primary mx-auto mb-8" />
+          <div className="max-w-4xl mx-auto text-center">
+            <ScrollReveal direction="up" scale>
+              <Coffee className="w-12 h-12 md:w-14 md:h-14 text-primary mx-auto mb-8" />
+            </ScrollReveal>
             
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif mb-8 leading-tight">
-              "Great coffee is not about the most expensive equipment. 
-              <span className="text-primary"> It's about understanding your tools.</span>"
-            </h2>
+            <ScrollReveal direction="up" delay={0.2}>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif mb-8 leading-tight">
+                "Great coffee is not about the most expensive equipment. 
+                <span className="text-primary"> It's about understanding your tools.</span>"
+              </h2>
+            </ScrollReveal>
             
-            <p className="text-foreground/50 text-base md:text-lg">
-              — The Craft of Brewing
-            </p>
-          </ScrollReveal>
+            <ScrollReveal direction="up" delay={0.4}>
+              <p className="text-foreground/50 text-base md:text-lg">
+                — The Craft of Brewing
+              </p>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* Equipment Highlights */}
       <section className="py-20 md:py-32 relative z-10">
         <div className="container mx-auto px-4 md:px-6">
-          <ScrollReveal className="mb-12 md:mb-16">
-            <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-3 block">
-              Beyond the Machine
-            </span>
-            <h2 className="text-4xl md:text-5xl font-serif">
-              Essential <GradientText text="Accessories" />
-            </h2>
+          <ScrollReveal direction="up">
+            <div className="mb-12 md:mb-16">
+              <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-3 block">
+                Beyond the Machine
+              </span>
+              <h2 className="text-4xl md:text-5xl font-serif">
+                Essential <GradientText text="Accessories" />
+              </h2>
+            </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {equipmentHighlights.map((item, i) => (
-              <ScrollReveal key={item.title} delay={i * 0.1}>
+              <ScrollReveal key={item.title} direction="up" delay={i * 0.15} scale>
                 <div className="group relative overflow-hidden rounded-2xl md:rounded-3xl h-full">
                   <div className="aspect-[4/5]">
                     <img 
@@ -487,7 +460,7 @@ export default function Machines() {
       {/* Key Variables */}
       <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
         <div className="container mx-auto px-4 md:px-6">
-          <ScrollReveal className="text-center mb-14 md:mb-20">
+          <ScrollReveal direction="up" className="text-center mb-14 md:mb-20">
             <h2 className="text-4xl md:text-5xl font-serif mb-4">
               Key <GradientText text="Variables" />
             </h2>
@@ -503,7 +476,7 @@ export default function Machines() {
               { icon: <Droplets className="w-7 h-7 md:w-8 md:h-8" />, title: "Brew Ratio", desc: "The coffee-to-water ratio varies by method—1:2 for espresso, 1:15 for pour over, 1:8 for cold brew." },
               { icon: <Coffee className="w-7 h-7 md:w-8 md:h-8" />, title: "Extraction Time", desc: "Each method has its sweet spot—25 seconds for espresso, 4 minutes for French press." },
             ].map((spec, i) => (
-              <ScrollReveal key={spec.title} delay={i * 0.1} className="text-center group">
+              <ScrollReveal key={spec.title} direction="up" delay={i * 0.1} className="text-center group">
                 <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all duration-300">
                   {spec.icon}
                 </div>
@@ -518,7 +491,7 @@ export default function Machines() {
       {/* Footer CTA */}
       <section className="py-20 md:py-28 relative z-10">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <ScrollReveal>
+          <ScrollReveal direction="up" scale>
             <p className="text-foreground/40 text-sm uppercase tracking-wider mb-4">
               Continue Exploring
             </p>
