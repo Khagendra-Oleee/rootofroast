@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Coffee } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { createPortal } from "react-dom";
 import Magnetic from "./Magnetic";
 
 export default function Navigation() {
@@ -30,7 +31,6 @@ export default function Navigation() {
   }, [isMobileMenuOpen]);
 
   const handleNavClick = (href: string) => {
-    // If it's a hash link, smooth scroll
     if (href.startsWith("#")) {
       const element = document.querySelector(href);
       if (element) {
@@ -50,20 +50,116 @@ export default function Navigation() {
     { name: "Philosophy", href: "#story" },
   ];
 
+  // Mobile menu portal content
+  const mobileMenuContent = isMobileMenuOpen ? createPortal(
+    <div 
+      id="mobile-menu-overlay"
+      style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: '#1a1512',
+        zIndex: 9998,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {/* Navigation Links */}
+      <nav style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+        {navLinks.map((link) => (
+          <button
+            key={link.name}
+            onClick={() => handleNavClick(link.href)}
+            style={{ 
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '28px',
+              fontWeight: 500,
+              color: '#e8dfd0',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px 16px',
+              transition: 'color 0.3s ease',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#c9944a'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#e8dfd0'}
+          >
+            {link.name}
+          </button>
+        ))}
+      </nav>
+
+      {/* CTA Button */}
+      <button
+        onClick={() => handleNavClick("#contact")}
+        style={{
+          marginTop: '40px',
+          padding: '12px 32px',
+          borderRadius: '9999px',
+          border: '2px solid #c9944a',
+          color: '#c9944a',
+          backgroundColor: 'transparent',
+          fontSize: '16px',
+          fontWeight: 500,
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#c9944a';
+          e.currentTarget.style.color = '#1a1512';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'transparent';
+          e.currentTarget.style.color = '#c9944a';
+        }}
+      >
+        Let's Talk
+      </button>
+
+      {/* Footer */}
+      <div 
+        style={{ 
+          position: 'absolute',
+          bottom: '32px',
+          left: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '8px',
+          color: '#8a7a68',
+        }}
+      >
+        <Coffee style={{ width: '16px', height: '16px' }} />
+        <span style={{ fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          Crafted with passion
+        </span>
+      </div>
+    </div>,
+    document.body
+  ) : null;
+
   return (
     <>
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 transition-all duration-300 ${
           isScrolled 
             ? "py-3 md:py-4 bg-background/80 backdrop-blur-md border-b border-white/5" 
             : "py-4 md:py-8 bg-transparent"
         }`}
+        style={{ zIndex: 9999 }}
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link href="/" className="text-lg sm:text-xl md:text-2xl font-serif font-bold tracking-tighter text-foreground cursor-pointer z-50 relative">
+          <Link href="/" className="text-lg sm:text-xl md:text-2xl font-serif font-bold tracking-tighter text-foreground cursor-pointer">
             <span className="hidden sm:inline">Roots of Roast</span>
             <span className="sm:hidden">Roots</span>
             <span className="text-primary">.</span>
@@ -93,109 +189,17 @@ export default function Navigation() {
           </div>
 
           {/* Mobile Toggle */}
-          <motion.button
-            className="lg:hidden text-foreground z-50 relative p-2 -mr-2"
+          <button
+            className="lg:hidden p-2 -mr-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileTap={{ scale: 0.9 }}
+            style={{ color: '#e8dfd0', position: 'relative', zIndex: 10000 }}
           >
-            <AnimatePresence mode="wait">
-              {isMobileMenuOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X size={24} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu size={24} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 lg:hidden"
-          style={{ 
-            zIndex: 45,
-            backgroundColor: 'hsl(20, 25%, 8%)',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            position: 'fixed'
-          }}
-        >
-          {/* Mobile Menu Content */}
-          <div 
-            className="flex flex-col items-center justify-center"
-            style={{ 
-              height: '100vh',
-              width: '100%',
-              paddingTop: '80px',
-              paddingBottom: '40px'
-            }}
-          >
-            {/* Navigation Links */}
-            <nav className="flex flex-col items-center gap-6">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link.href)}
-                  className="font-serif font-medium hover:text-primary transition-colors"
-                  style={{ 
-                    fontSize: '28px',
-                    color: 'hsl(38, 30%, 88%)',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: '8px 16px'
-                  }}
-                >
-                  {link.name}
-                </button>
-              ))}
-            </nav>
-
-            {/* CTA Button */}
-            <button
-              onClick={() => handleNavClick("#contact")}
-              className="mt-10 px-8 py-3 rounded-full font-medium transition-all duration-300"
-              style={{
-                border: '2px solid hsl(30, 50%, 55%)',
-                color: 'hsl(30, 50%, 55%)',
-                backgroundColor: 'transparent',
-                fontSize: '16px',
-                cursor: 'pointer'
-              }}
-            >
-              Let's Talk
-            </button>
-
-            {/* Footer */}
-            <div 
-              className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-2"
-              style={{ color: 'hsl(38, 30%, 50%)' }}
-            >
-              <Coffee className="w-4 h-4" />
-              <span className="text-xs tracking-wider uppercase">Crafted with passion</span>
-            </div>
-          </div>
-        </div>
-      )}
+      {mobileMenuContent}
     </>
   );
 }
