@@ -5,6 +5,7 @@ import Hero from "../components/Hero";
 import CaseStudies from "../components/CaseStudies";
 import OriginMap from "../components/OriginMap";
 import BrewingGuide from "../components/BrewingGuide";
+import MachinesPreview from "../components/MachinesPreview";
 import CoffeeTypes from "../components/CoffeeTypes";
 import CoffeeCulture from "../components/CoffeeCulture";
 import Contact from "../components/Contact";
@@ -43,6 +44,7 @@ export default function Home() {
       <CaseStudies />
       <OriginMap />
       <BrewingGuide />
+      <MachinesPreview />
       <CoffeeCulture />
       <Contact />
     </div>
