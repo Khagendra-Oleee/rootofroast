@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeft, ArrowRight, Coffee, Gauge, Zap, Droplets } from "lucide-react";
 import { Link } from "wouter";
+import Navigation from "@/components/Navigation";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
 import GradientText from "@/components/reactbits/GradientText";
@@ -116,30 +117,7 @@ export default function Machines() {
       <FloatingParticles count={12} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
       
       {/* Navigation */}
-      <motion.nav 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 p-4 md:p-6"
-      >
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/">
-            <Magnetic>
-              <motion.div 
-                className="flex items-center gap-2 md:gap-3 text-foreground/80 hover:text-primary transition-colors cursor-pointer group"
-                whileHover={{ x: -5 }}
-              >
-                <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
-                <span className="text-xs md:text-sm font-medium tracking-wide hidden sm:inline">Back to Home</span>
-              </motion.div>
-            </Magnetic>
-          </Link>
-          
-          <span className="text-xl md:text-2xl font-serif font-semibold tracking-tight text-foreground">
-            Roots<span className="text-primary">.</span>
-          </span>
-        </div>
-      </motion.nav>
+      <Navigation />
 
       {/* Hero - Full Screen Image with Text Overlay */}
       <section ref={heroRef} className="relative h-screen min-h-[600px] overflow-hidden">
