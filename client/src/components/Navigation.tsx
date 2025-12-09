@@ -129,28 +129,25 @@ export default function Navigation() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
-            animate={{ opacity: 1, clipPath: "circle(150% at calc(100% - 40px) 40px)" }}
-            exit={{ opacity: 0, clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-background"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-background lg:hidden"
           >
             {/* Mobile Menu Content */}
-            <div className="h-full flex flex-col">
-              {/* Spacer for navbar */}
-              <div className="h-16 md:h-20" />
-              
+            <div className="h-full w-full flex flex-col pt-20">
               {/* Navigation Links */}
-              <div className="flex-1 flex flex-col items-center justify-center px-6 -mt-16">
-                <nav className="flex flex-col items-center gap-6 sm:gap-8">
+              <div className="flex-1 flex flex-col items-center justify-center px-6">
+                <nav className="flex flex-col items-center gap-5 sm:gap-6">
                   {navLinks.map((link, i) => (
                     <motion.button
-                      initial={{ y: 40, opacity: 0 }}
+                      initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 + i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ delay: 0.05 + i * 0.05, duration: 0.3 }}
                       key={link.name}
                       onClick={() => handleNavClick(link.href)}
-                      className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-foreground hover:text-primary transition-colors active:scale-95"
+                      className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-foreground hover:text-primary transition-colors active:scale-95"
                     >
                       {link.name}
                     </motion.button>
@@ -159,11 +156,11 @@ export default function Navigation() {
 
                 {/* CTA Button */}
                 <motion.button
-                  initial={{ y: 40, opacity: 0 }}
+                  initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 + navLinks.length * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: 0.05 + navLinks.length * 0.05, duration: 0.3 }}
                   onClick={() => handleNavClick("#contact")}
-                  className="mt-10 sm:mt-12 px-8 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-lg font-medium active:scale-95"
+                  className="mt-8 sm:mt-10 px-8 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-base sm:text-lg font-medium active:scale-95"
                 >
                   Let's Talk
                 </motion.button>
@@ -173,8 +170,8 @@ export default function Navigation() {
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-                className="pb-8 px-6"
+                transition={{ delay: 0.4, duration: 0.3 }}
+                className="pb-6 sm:pb-8 px-6"
               >
                 <div className="flex items-center justify-center gap-2 text-foreground/40">
                   <Coffee className="w-4 h-4" />
