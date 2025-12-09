@@ -10,6 +10,7 @@ import Sourcing from "@/pages/Sourcing";
 import Space from "@/pages/Space";
 import Craft from "@/pages/Craft";
 import ExploreProcess from "@/pages/ExploreProcess";
+import Machines from "@/pages/Machines";
 
 const pageVariants = {
   initial: { opacity: 0, filter: "blur(10px)" },
@@ -72,6 +73,18 @@ function Router() {
             transition={pageTransition}
           >
             <ExploreProcess />
+          </motion.div>
+        </Route>
+        <Route path="/machines">
+          <motion.div
+            key="machines"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <Machines />
           </motion.div>
         </Route>
         <Route path="/">
