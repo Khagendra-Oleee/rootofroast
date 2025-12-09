@@ -1,122 +1,250 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Coffee, Gauge, Zap } from "lucide-react";
-import TiltCard from "./TiltCard";
-import ShinyButton from "./reactbits/ShinyButton";
+import { ArrowRight, Coffee, Droplets, Flame, Settings } from "lucide-react";
+import Spotlight from "./reactbits/Spotlight";
+import SplitText from "./reactbits/SplitText";
+import CountUp from "./reactbits/CountUp";
 import GradientText from "./reactbits/GradientText";
+import ShinyButton from "./reactbits/ShinyButton";
 import ClickSpark from "./reactbits/ClickSpark";
 
-const equipmentTypes = [
+const equipmentCards = [
   {
-    icon: <Coffee className="w-6 h-6" />,
-    title: "Espresso Machines",
-    desc: "From lever to super-automatic, the heart of café culture."
+    id: "espresso",
+    icon: <Coffee className="w-5 h-5 md:w-6 md:h-6" />,
+    title: "Espresso",
+    subtitle: "Pressure Brewing",
+    image: "https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80",
+    stat: "9",
+    statLabel: "Bar",
   },
   {
-    icon: <Gauge className="w-6 h-6" />,
-    title: "Pour Over & Drippers",
-    desc: "Precision brewing for single-origin clarity."
+    id: "pourover",
+    icon: <Droplets className="w-5 h-5 md:w-6 md:h-6" />,
+    title: "Pour Over",
+    subtitle: "Precision Drip",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80",
+    stat: "96",
+    statLabel: "°C",
   },
   {
-    icon: <Zap className="w-6 h-6" />,
-    title: "Grinders & Tools",
-    desc: "Essential equipment for consistent extraction."
-  }
+    id: "grinders",
+    icon: <Settings className="w-5 h-5 md:w-6 md:h-6" />,
+    title: "Grinders",
+    subtitle: "Burr Technology",
+    image: "https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?w=800&q=80",
+    stat: "40",
+    statLabel: "Steps",
+  },
+  {
+    id: "stovetop",
+    icon: <Flame className="w-5 h-5 md:w-6 md:h-6" />,
+    title: "Stovetop",
+    subtitle: "Traditional Craft",
+    image: "https://images.unsplash.com/photo-1621555470436-d36e9683bdb1?w=800&q=80",
+    stat: "2",
+    statLabel: "Bar",
+  },
 ];
 
 export default function MachinesPreview() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef(null);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   return (
-    <section id="machines" className="py-20 md:py-32 bg-background relative overflow-hidden">
-      {/* Soft Glow */}
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-      
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Content Side */}
-          <div className="order-2 lg:order-1">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-4 block">
-                Tools of the Trade
-              </span>
-              
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6 md:mb-10 leading-tight">
-                Coffee <br />
-                <GradientText text="Equipment" className="text-4xl md:text-5xl lg:text-6xl font-serif italic" />
-              </h2>
+    <section 
+      id="machines" 
+      ref={sectionRef}
+      className="py-24 md:py-40 relative overflow-hidden"
+    >
+      {/* Animated Background */}
+      <motion.div 
+        className="absolute inset-0 z-0"
+        style={{ y: backgroundY }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/50 to-background" />
+        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full" />
+        <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full" />
+      </motion.div>
 
-              <p className="text-foreground/60 text-base md:text-lg mb-8 md:mb-10 max-w-lg">
-                Understanding the machines and tools that shape how we brew. 
-                From traditional methods to modern innovations.
-              </p>
-  
-              <div className="space-y-6 md:space-y-8">
-                {equipmentTypes.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.15 }}
-                    className="flex gap-4 md:gap-6 group"
-                  >
-                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black group-hover:scale-110 transition-all duration-300 shadow-lg flex-shrink-0">
-                      {item.icon}
-                    </div>
+      {/* Grid Pattern Overlay */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(212,165,116,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(212,165,116,0.3) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}
+      />
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16 md:mb-24">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="inline-block text-primary/70 text-xs md:text-sm tracking-[0.3em] uppercase mb-4 md:mb-6"
+          >
+            Tools of the Trade
+          </motion.span>
+          
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif mb-6 md:mb-8">
+            <SplitText text="Coffee" className="text-foreground" delay={0.2} />
+            <br />
+            <GradientText text="Equipment" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif italic" />
+          </h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-foreground/50 text-base md:text-lg lg:text-xl max-w-2xl mx-auto"
+          >
+            From precision espresso machines to artisanal hand grinders, 
+            discover the tools that transform beans into extraordinary brews.
+          </motion.p>
+        </div>
+
+        {/* Equipment Cards Grid */}
+        <Spotlight className="rounded-3xl" spotlightSize={500}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            {equipmentCards.map((card, index) => (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.2 + index * 0.1 }}
+                onMouseEnter={() => setHoveredCard(card.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className="group relative"
+              >
+                <div className={`
+                  relative overflow-hidden rounded-2xl md:rounded-3xl 
+                  bg-card/80 backdrop-blur-sm border border-white/5
+                  transition-all duration-500 ease-out
+                  ${hoveredCard === card.id ? 'scale-[1.02] border-primary/30 shadow-2xl shadow-primary/10' : ''}
+                  ${hoveredCard && hoveredCard !== card.id ? 'opacity-50 scale-[0.98]' : ''}
+                `}>
+                  {/* Image */}
+                  <div className="aspect-[3/4] overflow-hidden">
+                    <motion.img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover"
+                      animate={{
+                        scale: hoveredCard === card.id ? 1.1 : 1,
+                      }}
+                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                  </div>
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 flex flex-col justify-between p-4 md:p-6">
+                    {/* Top - Icon */}
+                    <motion.div
+                      className={`
+                        w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl 
+                        flex items-center justify-center
+                        transition-all duration-300
+                        ${hoveredCard === card.id 
+                          ? 'bg-primary text-black' 
+                          : 'bg-white/10 backdrop-blur-sm text-primary border border-white/10'
+                        }
+                      `}
+                    >
+                      {card.icon}
+                    </motion.div>
+
+                    {/* Bottom - Info */}
                     <div>
-                      <h3 className="text-lg md:text-xl font-serif text-white mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
-                      <p className="text-muted-foreground font-light text-sm md:text-base">{item.desc}</p>
+                      {/* Stat Badge */}
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ 
+                          opacity: hoveredCard === card.id ? 1 : 0,
+                          x: hoveredCard === card.id ? 0 : -20
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="mb-3 md:mb-4"
+                      >
+                        <span className="inline-flex items-baseline gap-1 px-3 py-1 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30">
+                          <CountUp 
+                            to={parseInt(card.stat)} 
+                            className="text-lg md:text-xl font-serif text-primary" 
+                            duration={1}
+                          />
+                          <span className="text-xs text-primary/70">{card.statLabel}</span>
+                        </span>
+                      </motion.div>
+
+                      <h3 className="text-xl md:text-2xl font-serif text-white mb-1 group-hover:text-primary transition-colors duration-300">
+                        {card.title}
+                      </h3>
+                      <p className="text-foreground/50 text-xs md:text-sm">
+                        {card.subtitle}
+                      </p>
                     </div>
-                  </motion.div>
-                ))}
+                  </div>
+
+                  {/* Hover Border Glow */}
+                  <motion.div
+                    className="absolute inset-0 rounded-2xl md:rounded-3xl pointer-events-none"
+                    animate={{
+                      boxShadow: hoveredCard === card.id 
+                        ? 'inset 0 0 30px rgba(212, 165, 116, 0.1)' 
+                        : 'inset 0 0 0px rgba(212, 165, 116, 0)'
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Spotlight>
+
+        {/* Bottom Stats Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-12 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 p-6 md:p-8 rounded-2xl md:rounded-3xl bg-card/50 backdrop-blur-sm border border-white/5"
+        >
+          <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12">
+            {[
+              { value: 6, label: "Brewing Methods", suffix: "+" },
+              { value: 15, label: "Equipment Types", suffix: "+" },
+              { value: 100, label: "Years of Innovation", suffix: "+" },
+            ].map((stat, i) => (
+              <div key={i} className="text-center md:text-left">
+                <div className="text-2xl md:text-3xl font-serif text-primary">
+                  <CountUp to={stat.value} suffix={stat.suffix} duration={2} />
+                </div>
+                <div className="text-xs md:text-sm text-foreground/40 uppercase tracking-wider mt-1">
+                  {stat.label}
+                </div>
               </div>
-  
-              <Link href="/machines">
-                <ClickSpark sparkColor="#D4A574">
-                  <ShinyButton className="mt-10 md:mt-14">
-                    Explore Equipment
-                    <ArrowRight className="w-5 h-5" />
-                  </ShinyButton>
-                </ClickSpark>
-              </Link>
-            </motion.div>
+            ))}
           </div>
 
-          {/* Image Side */}
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-            animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: 2 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative order-1 lg:order-2"
-          >
-            <TiltCard>
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1585515320310-259814833e62?w=1200&q=80"
-                  alt="Espresso Machine" 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              </div>
-            </TiltCard>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="absolute -bottom-6 -right-4 md:-bottom-10 md:-right-10 w-36 h-36 md:w-48 md:h-48 bg-card border border-white/5 shadow-xl rounded-full flex flex-col items-center justify-center z-10 p-4 md:p-6 text-center"
-            >
-              <span className="text-3xl md:text-4xl font-serif text-primary mb-1">9</span>
-              <span className="text-[10px] md:text-xs uppercase tracking-widest text-muted-foreground">Bar Pressure</span>
-            </motion.div>
-          </motion.div>
-        </div>
+          <Link href="/machines">
+            <ClickSpark sparkColor="#D4A574">
+              <ShinyButton className="whitespace-nowrap">
+                Explore All Equipment
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+              </ShinyButton>
+            </ClickSpark>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
