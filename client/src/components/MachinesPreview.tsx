@@ -8,7 +8,7 @@ import CountUp from "./reactbits/CountUp";
 import GradientText from "./reactbits/GradientText";
 import ShinyButton from "./reactbits/ShinyButton";
 import ClickSpark from "./reactbits/ClickSpark";
-import LightPillars from "./reactbits/LightPillars";
+import LightPillar from "./reactbits/LightPillar";
 
 // Import local machine images
 import espressoImg from "@assets/stock_images/machines/esspressomachine.webp";
@@ -73,15 +73,22 @@ export default function MachinesPreview() {
       ref={sectionRef}
       className="py-24 md:py-40 relative overflow-hidden"
     >
-      {/* Light Pillars Background Effect */}
-      <LightPillars 
-        count={6} 
-        colors={[
-          "rgba(212, 165, 116, 0.06)", 
-          "rgba(198, 123, 72, 0.05)", 
-          "rgba(139, 90, 43, 0.04)"
-        ]} 
-      />
+      {/* Light Pillar Background Effect */}
+      <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+        <LightPillar
+          topColor="#D4A574"
+          bottomColor="#8B5A2B"
+          intensity={0.8}
+          rotationSpeed={0.2}
+          glowAmount={0.004}
+          pillarWidth={4.0}
+          pillarHeight={0.3}
+          noiseIntensity={0.4}
+          pillarRotation={0}
+          interactive={false}
+          mixBlendMode="screen"
+        />
+      </div>
 
       {/* Animated Background */}
       <motion.div 
