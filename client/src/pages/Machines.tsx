@@ -1,158 +1,81 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Coffee, Zap, Gauge, Droplets, ThermometerSun, Scale, ChevronDown, Filter, Star } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowLeft, ArrowRight, Coffee, Gauge, Zap, Droplets } from "lucide-react";
 import { Link } from "wouter";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
-import SplitText from "@/components/reactbits/SplitText";
 import GradientText from "@/components/reactbits/GradientText";
 import FloatingParticles from "@/components/reactbits/FloatingParticles";
-import ShinyButton from "@/components/reactbits/ShinyButton";
-import StaggeredGrid from "@/components/reactbits/StaggeredGrid";
-import CountUp from "@/components/reactbits/CountUp";
 import ClickSpark from "@/components/reactbits/ClickSpark";
 
-import espressoMachineImg from "@assets/stock_images/espresso_machine_por_6d4bd314.jpg";
-import espressoImg from "@assets/stock_images/espresso_extraction__3527e77f.jpg";
-import espressoImg2 from "@assets/stock_images/espresso_extraction__b0ed6eed.jpg";
-
-type MachineCategory = "all" | "professional" | "semi-pro" | "home" | "portable" | "accessories";
-
-interface Machine {
-  id: string;
-  name: string;
-  category: MachineCategory;
-  tagline: string;
-  description: string;
-  image: string;
-  specs: {
-    pressure: string;
-    boiler: string;
-    power: string;
-    weight: string;
-  };
-  features: string[];
-  rating: number;
-  priceRange: string;
-}
-
-const machines: Machine[] = [
+const machineCategories = [
   {
-    id: "la-marzocco-linea",
-    name: "La Marzocco Linea Mini",
-    category: "semi-pro",
-    tagline: "Cafe Quality at Home",
-    description: "The iconic dual boiler machine that brings professional-grade espresso to your kitchen counter.",
-    image: espressoMachineImg,
-    specs: { pressure: "9 bar", boiler: "Dual", power: "2200W", weight: "29 kg" },
-    features: ["Dual Boiler System", "PID Temperature Control", "Pre-infusion", "Stainless Steel Body"],
-    rating: 5,
-    priceRange: "$$$$$"
+    id: "professional",
+    title: "Professional",
+    subtitle: "Commercial Grade Powerhouses",
+    description: "Built for high-volume cafes and restaurants, these machines deliver consistent excellence shot after shot. Multi-boiler systems, volumetric dosing, and NSF certification make them the backbone of specialty coffee shops worldwide.",
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80",
+    machines: ["La Marzocco Linea PB", "Slayer Steam EP", "Synesso MVP Hydra"],
+    specs: { pressure: "9-12 bar", output: "200+ cups/day", recovery: "< 3 sec" }
   },
   {
-    id: "rocket-appartamento",
-    name: "Rocket Appartamento",
-    category: "semi-pro",
-    tagline: "Italian Craftsmanship",
-    description: "Heat exchanger machine with stunning design and exceptional shot quality for the discerning home barista.",
-    image: espressoImg,
-    specs: { pressure: "9 bar", boiler: "HX", power: "1200W", weight: "20 kg" },
-    features: ["Heat Exchanger", "E61 Group Head", "Copper Boiler", "Commercial Portafilter"],
-    rating: 5,
-    priceRange: "$$$$"
+    id: "semi-professional", 
+    title: "Semi-Professional",
+    subtitle: "Cafe Quality, Home Setting",
+    description: "The sweet spot between commercial capability and home convenience. Dual boilers, E61 group heads, and PID temperature control bring professional results to passionate home baristas.",
+    image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=1200&q=80",
+    machines: ["Rocket Appartamento", "Profitec Pro 600", "ECM Synchronika"],
+    specs: { pressure: "9 bar", warmup: "20-25 min", boiler: "Dual/HX" }
   },
   {
-    id: "breville-barista-pro",
-    name: "Breville Barista Pro",
-    category: "home",
-    tagline: "Smart Espresso",
-    description: "Integrated grinder and intuitive controls make this the perfect entry into specialty espresso.",
-    image: espressoImg2,
-    specs: { pressure: "9 bar", boiler: "ThermoJet", power: "1680W", weight: "6.6 kg" },
-    features: ["Built-in Grinder", "Digital Display", "Auto Milk Texturing", "Fast Heat-up"],
-    rating: 4,
-    priceRange: "$$$"
+    id: "home",
+    title: "Home Espresso",
+    subtitle: "Your Daily Ritual",
+    description: "Accessible entry points into the world of real espresso. These machines prove that exceptional coffee doesn't require a commercial budget—just dedication to the craft.",
+    image: "https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=1200&q=80",
+    machines: ["Gaggia Classic Pro", "Breville Bambino Plus", "Rancilio Silvia"],
+    specs: { pressure: "9-15 bar", warmup: "3-10 min", size: "Compact" }
   },
   {
-    id: "gaggia-classic-pro",
-    name: "Gaggia Classic Pro",
-    category: "home",
-    tagline: "The Classic Choice",
-    description: "A legendary machine that has introduced countless enthusiasts to the world of real espresso.",
-    image: espressoMachineImg,
-    specs: { pressure: "9 bar", boiler: "Single", power: "1425W", weight: "8 kg" },
-    features: ["Commercial Portafilter", "3-Way Solenoid", "Steam Wand", "Simple Operation"],
-    rating: 4,
-    priceRange: "$$"
+    id: "manual",
+    title: "Manual & Lever",
+    subtitle: "Pure Connection",
+    description: "No pumps, no electronics—just you, water, and coffee. Manual espresso makers offer unparalleled control and a meditative brewing experience that connects you directly to the extraction.",
+    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&q=80",
+    machines: ["Flair 58", "Robot Cafelat", "La Pavoni Europiccola"],
+    specs: { pressure: "6-9 bar", power: "Manual", portability: "High" }
   },
   {
-    id: "flair-58",
-    name: "Flair 58",
-    category: "portable",
-    tagline: "Manual Precision",
-    description: "Lever-operated manual espresso maker that puts complete control in your hands.",
-    image: espressoImg,
-    specs: { pressure: "6-9 bar", boiler: "None", power: "0W", weight: "4.5 kg" },
-    features: ["Manual Lever", "Pressure Gauge", "Preheated Group", "No Electricity Needed"],
-    rating: 5,
-    priceRange: "$$$"
-  },
-  {
-    id: "wacaco-picopresso",
-    name: "Wacaco Picopresso",
-    category: "portable",
-    tagline: "Espresso Anywhere",
-    description: "Ultra-portable hand-powered espresso maker for the traveling coffee enthusiast.",
-    image: espressoImg2,
-    specs: { pressure: "18 bar", boiler: "None", power: "0W", weight: "0.35 kg" },
-    features: ["Hand Powered", "Naked Portafilter", "Travel Case", "Professional Results"],
-    rating: 4,
-    priceRange: "$$"
-  },
-  {
-    id: "slayer-single",
-    name: "Slayer Single Group",
-    category: "professional",
-    tagline: "The Ultimate Machine",
-    description: "Pre-brew pressure profiling technology that revolutionized specialty coffee extraction.",
-    image: espressoMachineImg,
-    specs: { pressure: "Variable", boiler: "Multi", power: "2400W", weight: "45 kg" },
-    features: ["Pressure Profiling", "Volumetric Dosing", "Custom Wood Panels", "NSF Certified"],
-    rating: 5,
-    priceRange: "$$$$$$"
-  },
-  {
-    id: "decent-de1pro",
-    name: "Decent DE1PRO",
-    category: "professional",
-    tagline: "Data-Driven Espresso",
-    description: "The most technologically advanced espresso machine with real-time shot analysis.",
-    image: espressoImg,
-    specs: { pressure: "0-12 bar", boiler: "Instant", power: "1500W", weight: "9 kg" },
-    features: ["Bluetooth App", "Flow Profiling", "Real-time Graphs", "Recipe Sharing"],
-    rating: 5,
-    priceRange: "$$$$$"
+    id: "portable",
+    title: "Portable",
+    subtitle: "Espresso Without Boundaries",
+    description: "From mountain peaks to office desks, portable espresso makers liberate your coffee ritual from the kitchen. Hand-powered precision that travels wherever adventure calls.",
+    image: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=1200&q=80",
+    machines: ["Wacaco Picopresso", "1Zpresso J-Max", "AeroPress"],
+    specs: { weight: "< 500g", power: "None", output: "Single shot" }
   }
 ];
 
-const accessories = [
-  { name: "Precision Tamper", icon: <Scale className="w-6 h-6" />, description: "Calibrated 30lb pressure" },
-  { name: "Distribution Tool", icon: <Filter className="w-6 h-6" />, description: "Even coffee distribution" },
-  { name: "Precision Scale", icon: <Gauge className="w-6 h-6" />, description: "0.1g accuracy timing" },
-  { name: "Milk Pitcher", icon: <Droplets className="w-6 h-6" />, description: "Latte art perfection" },
-];
-
-const categories: { value: MachineCategory; label: string }[] = [
-  { value: "all", label: "All Machines" },
-  { value: "professional", label: "Professional" },
-  { value: "semi-pro", label: "Semi-Professional" },
-  { value: "home", label: "Home" },
-  { value: "portable", label: "Portable" },
+const equipmentHighlights = [
+  {
+    title: "Grinders",
+    description: "The unsung hero of espresso. A quality grinder matters more than the machine itself.",
+    image: "https://images.unsplash.com/photo-1587049016823-69ef9d68bd44?w=800&q=80"
+  },
+  {
+    title: "Accessories", 
+    description: "Tampers, scales, and distribution tools that elevate every extraction.",
+    image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80"
+  },
+  {
+    title: "Milk Tools",
+    description: "Steam wands and pitchers designed for latte art perfection.",
+    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800&q=80"
+  }
 ];
 
 export default function Machines() {
-  const [activeCategory, setActiveCategory] = useState<MachineCategory>("all");
-  const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef(null);
   const heroRef = useRef(null);
 
@@ -161,22 +84,29 @@ export default function Machines() {
     offset: ["start start", "end start"]
   });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const filteredMachines = activeCategory === "all" 
-    ? machines 
-    : machines.filter(m => m.category === activeCategory);
+  const nextCategory = () => {
+    setActiveIndex((prev) => (prev + 1) % machineCategories.length);
+  };
+
+  const prevCategory = () => {
+    setActiveIndex((prev) => (prev - 1 + machineCategories.length) % machineCategories.length);
+  };
+
+  const activeCategory = machineCategories[activeIndex];
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background text-foreground overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-background text-foreground">
       <LiquidBackground />
-      <FloatingParticles count={15} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
+      <FloatingParticles count={12} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
       
+      {/* Navigation */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -202,363 +132,369 @@ export default function Machines() {
         </div>
       </motion.nav>
 
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Hero - Full Screen Image with Text Overlay */}
+      <section ref={heroRef} className="relative h-screen overflow-hidden">
         <motion.div 
-          style={{ y: heroY }}
-          className="absolute inset-0 z-0"
+          style={{ scale: heroScale }}
+          className="absolute inset-0"
         >
           <img 
-            src={espressoMachineImg} 
-            alt="Espresso Machine" 
+            src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1920&q=80"
+            alt="Espresso Machine Detail" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
         </motion.div>
 
         <motion.div 
           style={{ opacity: heroOpacity }}
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+          className="relative z-10 h-full flex items-center"
         >
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-primary/80 text-sm tracking-[0.3em] uppercase mb-6 block font-medium"
-          >
-            The Tools of the Trade
-          </motion.span>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-6">
-            <SplitText text="Coffee" className="text-foreground" />
-            <br />
-            <GradientText text="Machines" className="text-5xl md:text-7xl lg:text-8xl font-serif" />
-          </h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="text-foreground/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12"
-          >
-            From professional-grade espresso machines to portable brewing companions, 
-            discover the equipment that transforms beans into liquid art.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            className="flex flex-wrap justify-center gap-3"
-          >
-            {categories.map((cat) => (
-              <ClickSpark key={cat.value} sparkColor="#D4A574">
-                <motion.button
-                  onClick={() => setActiveCategory(cat.value)}
-                  className={`px-5 py-3 rounded-full text-sm font-medium transition-all duration-300 border ${
-                    activeCategory === cat.value
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-white/5 text-foreground/70 border-white/10 hover:bg-white/10 hover:border-primary/50"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {cat.label}
-                </motion.button>
-              </ClickSpark>
-            ))}
-          </motion.div>
+          <div className="container mx-auto px-6">
+            <div className="max-w-2xl">
+              <motion.span
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="text-primary text-sm tracking-[0.3em] uppercase mb-6 block font-medium"
+              >
+                The Art of Extraction
+              </motion.span>
+              
+              <motion.h1 
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="text-6xl md:text-8xl font-serif mb-8 leading-[0.9]"
+              >
+                Coffee<br />
+                <GradientText text="Machines" className="text-6xl md:text-8xl font-serif" />
+              </motion.h1>
+              
+              <motion.p
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7, duration: 0.8 }}
+                className="text-foreground/60 text-lg md:text-xl leading-relaxed max-w-lg"
+              >
+                From lever-pulled tradition to precision-engineered innovation. 
+                Exploring the instruments that transform beans into moments.
+              </motion.p>
+            </div>
+          </div>
         </motion.div>
 
+        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
         >
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2"
-          >
-            <span className="text-foreground/40 text-xs uppercase tracking-wider">Scroll to Explore</span>
-            <ChevronDown className="w-5 h-5 text-primary/60" />
-          </motion.div>
+            className="w-px h-16 bg-gradient-to-b from-primary to-transparent"
+          />
         </motion.div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 relative z-10 border-y border-white/10">
+      {/* Category Showcase - Horizontal Scroll Feel */}
+      <section className="py-32 relative z-10">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: 8, label: "Machines Featured", suffix: "+" },
-              { value: 15, label: "Bar Pressure Max", suffix: "" },
-              { value: 100, label: "Years Combined Heritage", suffix: "+" },
-              { value: 5, label: "Categories", suffix: "" },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-20"
+          >
+            <span className="text-primary/60 text-sm tracking-[0.2em] uppercase mb-4 block">
+              Machine Categories
+            </span>
+            <h2 className="text-4xl md:text-6xl font-serif">
+              Find Your <GradientText text="Perfect Match" />
+            </h2>
+          </motion.div>
+
+          {/* Category Navigator */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Image Side */}
+            <motion.div 
+              key={activeCategory.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-7 relative"
+            >
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden">
+                <img 
+                  src={activeCategory.image}
+                  alt={activeCategory.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Floating Specs */}
+              <motion.div 
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="absolute -bottom-6 -right-6 md:right-8 bg-card/95 backdrop-blur-sm border border-white/10 rounded-2xl p-6 shadow-2xl"
               >
-                <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">
-                  <CountUp to={stat.value} />{stat.suffix}
-                </span>
-                <span className="text-foreground/40 text-sm uppercase tracking-wider">{stat.label}</span>
+                <div className="flex gap-6">
+                  {Object.entries(activeCategory.specs).map(([key, value]) => (
+                    <div key={key} className="text-center">
+                      <span className="text-primary text-lg font-serif block">{value}</span>
+                      <span className="text-foreground/40 text-xs uppercase tracking-wider">{key}</span>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Machines Grid */}
-      <section className="py-24 relative z-10">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-primary/60 text-sm tracking-[0.2em] uppercase mb-3 block">Our Selection</span>
-            <h2 className="text-3xl md:text-5xl font-serif">
-              <GradientText text={activeCategory === "all" ? "All Machines" : categories.find(c => c.value === activeCategory)?.label || ""} />
-            </h2>
-          </motion.div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-            >
-              <StaggeredGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" stagger={0.1}>
-                {filteredMachines.map((machine) => (
-                  <MachineCard 
-                    key={machine.id} 
-                    machine={machine} 
-                    onClick={() => setSelectedMachine(machine)}
-                  />
-                ))}
-              </StaggeredGrid>
             </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
 
-      {/* Accessories Section */}
-      <section className="py-24 relative z-10 bg-gradient-to-b from-transparent via-black/20 to-transparent">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-primary/60 text-sm tracking-[0.2em] uppercase mb-3 block">Essential Gear</span>
-            <h2 className="text-3xl md:text-5xl font-serif">
-              Barista <GradientText text="Accessories" />
-            </h2>
-          </motion.div>
-
-          <StaggeredGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.1}>
-            {accessories.map((accessory) => (
+            {/* Content Side */}
+            <div className="lg:col-span-5">
               <motion.div
-                key={accessory.name}
-                className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 transition-all duration-300 group text-center"
-                whileHover={{ y: -5 }}
+                key={activeCategory.id + "-content"}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                  {accessory.icon}
-                </div>
-                <h3 className="text-xl font-serif text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {accessory.name}
+                <span className="text-primary/60 text-sm tracking-wider uppercase mb-2 block">
+                  {String(activeIndex + 1).padStart(2, '0')} / {String(machineCategories.length).padStart(2, '0')}
+                </span>
+                
+                <h3 className="text-4xl md:text-5xl font-serif text-foreground mb-2">
+                  {activeCategory.title}
                 </h3>
-                <p className="text-foreground/50 text-sm leading-relaxed">
-                  {accessory.description}
+                
+                <p className="text-primary/80 text-lg mb-6 font-medium">
+                  {activeCategory.subtitle}
                 </p>
-              </motion.div>
-            ))}
-          </StaggeredGrid>
-        </div>
-      </section>
+                
+                <p className="text-foreground/60 leading-relaxed mb-8">
+                  {activeCategory.description}
+                </p>
 
-      {/* CTA Section */}
-      <section className="py-24 relative z-10">
-        <div className="container mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto"
-          >
-            <h2 className="text-4xl md:text-5xl font-serif mb-8 text-foreground">
-              Ready to <GradientText text="Upgrade" />?
-            </h2>
-            <p className="text-foreground/60 text-xl mb-12 leading-relaxed">
-              Whether you're starting your espresso journey or upgrading your setup, 
-              we're here to help you find the perfect machine.
-            </p>
-            <Link href="/">
-              <ClickSpark sparkColor="#D4A574">
-                <Magnetic>
-                  <ShinyButton>
-                    <Coffee className="w-5 h-5" />
-                    Explore Our Coffee
-                  </ShinyButton>
-                </Magnetic>
-              </ClickSpark>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Machine Detail Modal */}
-      <AnimatePresence>
-        {selectedMachine && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-6"
-            onClick={() => setSelectedMachine(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl bg-card rounded-3xl overflow-hidden border border-white/10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="aspect-square">
-                  <img 
-                    src={selectedMachine.image} 
-                    alt={selectedMachine.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-8 flex flex-col justify-center">
-                  <span className="text-primary/60 text-sm tracking-[0.2em] uppercase mb-2">
-                    {selectedMachine.category.replace("-", " ")}
+                {/* Featured Machines */}
+                <div className="mb-10">
+                  <span className="text-foreground/40 text-xs uppercase tracking-wider mb-3 block">
+                    Notable Models
                   </span>
-                  <h3 className="text-3xl font-serif text-foreground mb-2">{selectedMachine.name}</h3>
-                  <p className="text-foreground/60 mb-6">{selectedMachine.description}</p>
-                  
-                  <div className="flex items-center gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-4 h-4 ${i < selectedMachine.rating ? "text-primary fill-primary" : "text-foreground/20"}`} 
-                      />
-                    ))}
-                    <span className="text-foreground/40 text-sm ml-2">{selectedMachine.priceRange}</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                      <Gauge className="w-4 h-4 text-primary mb-1" />
-                      <span className="text-foreground/40 text-xs block">Pressure</span>
-                      <span className="text-foreground text-sm font-medium">{selectedMachine.specs.pressure}</span>
-                    </div>
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                      <ThermometerSun className="w-4 h-4 text-primary mb-1" />
-                      <span className="text-foreground/40 text-xs block">Boiler</span>
-                      <span className="text-foreground text-sm font-medium">{selectedMachine.specs.boiler}</span>
-                    </div>
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                      <Zap className="w-4 h-4 text-primary mb-1" />
-                      <span className="text-foreground/40 text-xs block">Power</span>
-                      <span className="text-foreground text-sm font-medium">{selectedMachine.specs.power}</span>
-                    </div>
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                      <Scale className="w-4 h-4 text-primary mb-1" />
-                      <span className="text-foreground/40 text-xs block">Weight</span>
-                      <span className="text-foreground text-sm font-medium">{selectedMachine.specs.weight}</span>
-                    </div>
-                  </div>
-
                   <div className="flex flex-wrap gap-2">
-                    {selectedMachine.features.map((feature) => (
+                    {activeCategory.machines.map((machine) => (
                       <span 
-                        key={feature}
-                        className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs border border-primary/20"
+                        key={machine}
+                        className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-foreground/70 text-sm"
                       >
-                        {feature}
+                        {machine}
                       </span>
                     ))}
                   </div>
                 </div>
-              </div>
-              
-              <motion.button
-                onClick={() => setSelectedMachine(null)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <span className="text-white text-xl">&times;</span>
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
-function MachineCard({ machine, onClick }: { machine: Machine; onClick: () => void }) {
-  return (
-    <motion.div
-      className="group cursor-pointer"
-      whileHover={{ y: -8 }}
-      onClick={onClick}
-    >
-      <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-4 bg-white/5 border border-white/10 group-hover:border-primary/30 transition-all duration-300">
-        <img 
-          src={machine.image} 
-          alt={machine.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-foreground/80 text-xs border border-white/20">
-            {machine.category.replace("-", " ")}
-          </span>
-        </div>
+                {/* Navigation Arrows */}
+                <div className="flex gap-4">
+                  <ClickSpark sparkColor="#D4A574">
+                    <motion.button
+                      onClick={prevCategory}
+                      className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-primary/50 transition-all"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <ArrowLeft className="w-5 h-5 text-foreground/70" />
+                    </motion.button>
+                  </ClickSpark>
+                  <ClickSpark sparkColor="#D4A574">
+                    <motion.button
+                      onClick={nextCategory}
+                      className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-primary/50 transition-all"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <ArrowRight className="w-5 h-5 text-foreground/70" />
+                    </motion.button>
+                  </ClickSpark>
+                </div>
+              </motion.div>
+            </div>
+          </div>
 
-        <div className="absolute bottom-4 left-4 right-4">
-          <div className="flex items-center gap-1 mb-2">
-            {[...Array(5)].map((_, i) => (
-              <Star 
-                key={i} 
-                className={`w-3 h-3 ${i < machine.rating ? "text-primary fill-primary" : "text-foreground/20"}`} 
+          {/* Category Dots */}
+          <div className="flex justify-center gap-3 mt-16">
+            {machineCategories.map((cat, i) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveIndex(i)}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  i === activeIndex 
+                    ? "w-12 bg-primary" 
+                    : "w-6 bg-white/20 hover:bg-white/40"
+                }`}
               />
             ))}
           </div>
-          <h3 className="text-lg font-serif text-foreground group-hover:text-primary transition-colors">
-            {machine.name}
-          </h3>
-          <p className="text-foreground/50 text-sm">{machine.tagline}</p>
         </div>
-      </div>
-      
-      <div className="flex items-center justify-between px-2">
-        <span className="text-foreground/40 text-sm">{machine.priceRange}</span>
-        <span className="text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-          View Details →
-        </span>
-      </div>
-    </motion.div>
+      </section>
+
+      {/* Philosophy Section - Full Width Image */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1920&q=80"
+            alt="Coffee brewing"
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background" />
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <Coffee className="w-12 h-12 text-primary mx-auto mb-8" />
+              
+              <h2 className="text-3xl md:text-5xl font-serif mb-8 leading-tight">
+                "The machine is merely an extension of intention. 
+                <span className="text-primary"> The barista is the artist.</span>"
+              </h2>
+              
+              <p className="text-foreground/50 text-lg">
+                — Philosophy of Craft
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Equipment Highlights - Asymmetric Grid */}
+      <section className="py-32 relative z-10">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <span className="text-primary/60 text-sm tracking-[0.2em] uppercase mb-4 block">
+              Beyond the Machine
+            </span>
+            <h2 className="text-4xl md:text-5xl font-serif">
+              Essential <GradientText text="Equipment" />
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {equipmentHighlights.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
+                className={`group relative overflow-hidden rounded-2xl ${
+                  i === 0 ? "md:row-span-2" : ""
+                }`}
+              >
+                <div className={`${i === 0 ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
+                  <img 
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                </div>
+                
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="text-2xl font-serif text-foreground mb-2 group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-foreground/60 text-sm">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Specs Breakdown */}
+      <section className="py-32 relative z-10 border-t border-white/10">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl md:text-5xl font-serif mb-4">
+              What <GradientText text="Matters" />
+            </h2>
+            <p className="text-foreground/50 max-w-2xl mx-auto">
+              Understanding the key specifications that define espresso machine performance.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: <Gauge className="w-8 h-8" />, title: "Pressure", desc: "9 bars is the gold standard for espresso extraction, creating the crema and body we love." },
+              { icon: <Zap className="w-8 h-8" />, title: "Temperature", desc: "Stability between 90-96°C ensures consistent extraction without burning the coffee." },
+              { icon: <Droplets className="w-8 h-8" />, title: "Boiler Type", desc: "Single, dual, or heat exchanger—each offers different steam and brew capabilities." },
+              { icon: <Coffee className="w-8 h-8" />, title: "Group Head", desc: "The E61 remains iconic, but saturated groups offer superior temperature stability." },
+            ].map((spec, i) => (
+              <motion.div
+                key={spec.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                  {spec.icon}
+                </div>
+                <h3 className="text-xl font-serif text-foreground mb-3">{spec.title}</h3>
+                <p className="text-foreground/50 text-sm leading-relaxed">{spec.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer CTA */}
+      <section className="py-24 relative z-10">
+        <div className="container mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-foreground/40 text-sm uppercase tracking-wider mb-4">
+              Continue Exploring
+            </p>
+            <Link href="/process">
+              <Magnetic>
+                <motion.span 
+                  className="text-3xl md:text-4xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer inline-flex items-center gap-4"
+                  whileHover={{ x: 10 }}
+                >
+                  Discover the Process
+                  <ArrowRight className="w-8 h-8" />
+                </motion.span>
+              </Magnetic>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    </div>
   );
 }
