@@ -14,7 +14,7 @@ const machineCategories = [
     title: "Espresso Machines",
     subtitle: "The Heart of Coffee Culture",
     description: "Espresso machines use pressure to force hot water through finely-ground coffee, creating a concentrated shot with rich crema. From pump-driven to lever-operated, these machines range from compact home units to multi-group commercial workhorses that power busy cafes.",
-    image: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1585515320310-259814833e62?w=1200&q=80",
     machines: ["Pump-Driven", "Lever Machines", "Semi-Automatic", "Super-Automatic"],
     specs: { pressure: "9 bar", temp: "90-96°C", extraction: "25-30 sec" }
   },
@@ -23,7 +23,7 @@ const machineCategories = [
     title: "Pour Over Equipment",
     subtitle: "Precision in Simplicity",
     description: "Pour over brewing offers complete control over every variable—water temperature, pour rate, and bloom time. This method highlights the delicate flavors and origin characteristics of single-origin beans, making it a favorite among specialty coffee enthusiasts.",
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80",
     machines: ["V60 Dripper", "Chemex", "Kalita Wave", "Origami Dripper"],
     specs: { ratio: "1:15-17", time: "3-4 min", grind: "Medium-Fine" }
   },
@@ -32,7 +32,7 @@ const machineCategories = [
     title: "Immersion Brewers",
     subtitle: "Full-Bodied Richness",
     description: "Immersion brewing steeps coffee grounds directly in water, extracting bold flavors and natural oils. The French Press remains iconic, while newer designs like the AeroPress offer versatility and portability without sacrificing depth of flavor.",
-    image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1572119865084-43c285814d63?w=1200&q=80",
     machines: ["French Press", "AeroPress", "Clever Dripper", "Siphon Brewer"],
     specs: { ratio: "1:12-15", time: "4-5 min", grind: "Coarse" }
   },
@@ -41,7 +41,7 @@ const machineCategories = [
     title: "Coffee Grinders",
     subtitle: "Where Quality Begins",
     description: "The grinder is arguably more important than the brewing device itself. Burr grinders provide consistent particle size essential for even extraction, while blade grinders offer affordability. From hand grinders to commercial flat burrs, the right grinder transforms your coffee.",
-    image: "https://images.unsplash.com/photo-1587049016823-69ef9d68bd44?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?w=1200&q=80",
     machines: ["Flat Burr", "Conical Burr", "Hand Grinders", "Commercial Mills"],
     specs: { burrs: "Steel/Ceramic", settings: "40+ steps", retention: "< 1g" }
   },
@@ -50,7 +50,7 @@ const machineCategories = [
     title: "Cold Brew Systems",
     subtitle: "Patience Rewarded",
     description: "Cold brew extracts coffee slowly using cold or room temperature water over 12-24 hours. The result is a smooth, naturally sweet concentrate with lower acidity. From simple mason jar setups to commercial towers, cold brew equipment suits every scale.",
-    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1200&q=80",
     machines: ["Toddy System", "Kyoto Drip Tower", "Filtron", "Immersion Pitchers"],
     specs: { ratio: "1:8", time: "12-24 hrs", temp: "Cold/Room" }
   },
@@ -59,7 +59,7 @@ const machineCategories = [
     title: "Stovetop Brewers",
     subtitle: "Traditional Craftsmanship",
     description: "The Moka pot has been an Italian kitchen staple since 1933, producing strong, espresso-style coffee on any stovetop. These aluminum or stainless steel brewers use steam pressure to push water through coffee, creating a rich and intense brew.",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1621555470436-d36e9683bdb1?w=1200&q=80",
     machines: ["Moka Pot", "Percolator", "Turkish Ibrik", "Vietnamese Phin"],
     specs: { pressure: "1-2 bar", time: "5-7 min", heat: "Stovetop" }
   }
@@ -69,17 +69,17 @@ const equipmentHighlights = [
   {
     title: "Scales & Timers",
     description: "Precision measurement is the foundation of repeatable brewing. Digital scales with built-in timers help dial in the perfect ratio every time.",
-    image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80"
+    image: "https://images.unsplash.com/photo-1606791405792-1004f1718d0c?w=800&q=80"
   },
   {
     title: "Kettles",
     description: "Gooseneck kettles with temperature control provide the precision pour rate essential for pour-over methods and consistent extraction.",
-    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80"
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80"
   },
   {
     title: "Tampers & Tools",
     description: "Distribution tools, calibrated tampers, and WDT needles ensure even extraction and eliminate channeling in espresso preparation.",
-    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800&q=80"
+    image: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=800&q=80"
   }
 ];
 
@@ -148,7 +148,7 @@ export default function Machines() {
           className="absolute inset-0"
         >
           <img 
-            src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1920&q=80"
             alt="Espresso Machine Detail" 
             className="w-full h-full object-cover"
           />
@@ -351,7 +351,7 @@ export default function Machines() {
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1920&q=80"
             alt="Coffee brewing"
             className="w-full h-full object-cover opacity-30"
           />
