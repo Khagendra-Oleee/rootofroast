@@ -1,12 +1,11 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, Coffee, Gauge, Zap, Droplets } from "lucide-react";
 import { Link } from "wouter";
-import Navigation from "@/components/Navigation";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
 import GradientText from "@/components/reactbits/GradientText";
-import FloatingParticles from "@/components/reactbits/FloatingParticles";
+import SplitText from "@/components/reactbits/SplitText";
 import ClickSpark from "@/components/reactbits/ClickSpark";
 
 // Import local machine images
@@ -92,8 +91,48 @@ const equipmentHighlights = [
   }
 ];
 
+// Scroll Reveal Animation Component
+function ScrollReveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Parallax Image Component
+function ParallaxImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  
+  return (
+    <div ref={ref} className={`overflow-hidden ${className}`}>
+      <motion.img
+        src={src}
+        alt={alt}
+        style={{ y }}
+        className="w-full h-[120%] object-cover"
+      />
+    </div>
+  );
+}
+
 export default function Machines() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const containerRef = useRef(null);
   const heroRef = useRef(null);
 
@@ -102,11 +141,19 @@ export default function Machines() {
     offset: ["start start", "end start"]
   });
 
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const nextCategory = () => {
@@ -122,15 +169,48 @@ export default function Machines() {
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground">
       <LiquidBackground />
-      <FloatingParticles count={6} colors={["#D4A574", "#C67B48"]} />
       
-      {/* Navigation */}
-      <Navigation />
+      {/* Custom Navigation - Back & Brand */}
+      <motion.nav 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? "py-4 bg-background/80 backdrop-blur-md border-b border-white/5" : "py-6"
+        }`}
+      >
+        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+          {/* Back Navigation */}
+          <Link href="/#machines">
+            <Magnetic>
+              <motion.div 
+                className="flex items-center gap-2 md:gap-3 text-foreground/70 hover:text-primary transition-colors cursor-pointer group"
+                whileHover={{ x: -5 }}
+              >
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-all">
+                  <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
+                </div>
+                <span className="text-sm md:text-base font-medium tracking-wide hidden sm:block">Back</span>
+              </motion.div>
+            </Magnetic>
+          </Link>
+          
+          {/* Brand Name */}
+          <Link href="/">
+            <motion.span 
+              className="text-xl md:text-2xl font-serif font-bold tracking-tight text-foreground cursor-pointer hover:text-primary transition-colors"
+              whileHover={{ scale: 1.02 }}
+            >
+              Roots of Roast<span className="text-primary">.</span>
+            </motion.span>
+          </Link>
+        </div>
+      </motion.nav>
 
-      {/* Hero - Full Screen Image with Text Overlay */}
-      <section ref={heroRef} className="relative h-screen min-h-[600px] overflow-hidden">
+      {/* Hero Section */}
+      <section ref={heroRef} className="relative h-screen min-h-[700px] overflow-hidden">
         <motion.div 
-          style={{ scale: heroScale }}
+          style={{ y: heroY }}
           className="absolute inset-0"
         >
           <img 
@@ -138,42 +218,47 @@ export default function Machines() {
             alt="Espresso Machine Detail" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/30 md:via-background/60 md:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </motion.div>
 
         <motion.div 
           style={{ opacity: heroOpacity }}
-          className="relative z-10 h-full flex items-center pt-16 md:pt-0"
+          className="relative z-10 h-full flex items-center pt-20"
         >
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-2xl">
-              <motion.span
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
+            <div className="max-w-3xl">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-primary text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-6 block font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 md:mb-8"
               >
-                Tools of the Trade
-              </motion.span>
+                <Coffee className="w-4 h-4 text-primary" />
+                <span className="text-primary text-xs md:text-sm tracking-[0.2em] uppercase font-medium">
+                  Equipment Guide
+                </span>
+              </motion.div>
               
-              <motion.h1 
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif mb-4 md:mb-8 leading-[0.95]"
-              >
-                Coffee<br />
-                <GradientText text="Equipment" className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif" />
-              </motion.h1>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif mb-6 md:mb-8 leading-[0.95]">
+                <SplitText text="Coffee" className="text-foreground" delay={0.4} />
+                <br />
+                <motion.span
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 0.8 }}
+                >
+                  <GradientText text="Equipment" className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif" />
+                </motion.span>
+              </h1>
               
               <motion.p
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7, duration: 0.8 }}
-                className="text-foreground/60 text-base md:text-lg lg:text-xl leading-relaxed max-w-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.8 }}
+                className="text-foreground/60 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-xl"
               >
-                Understanding the different types of coffee machines and brewing equipment 
-                that shape how we experience coffee around the world.
+                A comprehensive guide to the machines and tools that shape how we experience coffee.
               </motion.p>
             </div>
           </div>
@@ -183,149 +268,149 @@ export default function Machines() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-10"
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3"
         >
+          <span className="text-foreground/40 text-xs tracking-widest uppercase">Scroll</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-px h-12 md:h-16 bg-gradient-to-b from-primary to-transparent"
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-px h-12 bg-gradient-to-b from-primary to-transparent"
           />
         </motion.div>
       </section>
 
-      {/* Category Showcase - Horizontal Scroll Feel */}
-      <section className="py-16 md:py-32 relative z-10">
+      {/* Category Showcase */}
+      <section className="py-20 md:py-32 relative z-10">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-10 md:mb-20"
-          >
-            <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-4 block">
-              Brewing Methods
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif">
-              Types of <GradientText text="Equipment" />
-            </h2>
-          </motion.div>
+          <ScrollReveal>
+            <div className="mb-12 md:mb-20">
+              <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-3 block">
+                Brewing Methods
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif">
+                Types of <GradientText text="Equipment" />
+              </h2>
+            </div>
+          </ScrollReveal>
 
           {/* Category Navigator */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             {/* Image Side */}
-            <motion.div 
-              key={activeCategory.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-7 relative order-1 lg:order-1"
-            >
-              <div className="aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden">
-                <img 
-                  src={activeCategory.image}
-                  alt={activeCategory.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Floating Specs - Repositioned for mobile */}
+            <ScrollReveal className="lg:col-span-7 relative" delay={0.1}>
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="relative md:absolute mt-4 md:mt-0 md:-bottom-6 md:right-4 lg:right-8 bg-card/95 backdrop-blur-sm border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl"
+                key={activeCategory.id}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
               >
-                <div className="flex justify-around md:justify-start gap-4 md:gap-6">
-                  {Object.entries(activeCategory.specs).map(([key, value]) => (
-                    <div key={key} className="text-center">
-                      <span className="text-primary text-sm md:text-lg font-serif block">{value}</span>
-                      <span className="text-foreground/40 text-[10px] md:text-xs uppercase tracking-wider">{key}</span>
-                    </div>
-                  ))}
+                <div className="aspect-[4/3] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
+                  <img 
+                    src={activeCategory.image}
+                    alt={activeCategory.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Content Side */}
-            <div className="lg:col-span-5 order-2 lg:order-2 mt-8 lg:mt-0">
-              <motion.div
-                key={activeCategory.id + "-content"}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="text-primary/60 text-xs md:text-sm tracking-wider uppercase mb-2 block">
-                  {String(activeIndex + 1).padStart(2, '0')} / {String(machineCategories.length).padStart(2, '0')}
-                </span>
                 
-                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-2">
-                  {activeCategory.title}
-                </h3>
-                
-                <p className="text-primary/80 text-base md:text-lg mb-4 md:mb-6 font-medium">
-                  {activeCategory.subtitle}
-                </p>
-                
-                <p className="text-foreground/60 text-sm md:text-base leading-relaxed mb-6 md:mb-8">
-                  {activeCategory.description}
-                </p>
-
-                {/* Equipment Types */}
-                <div className="mb-8 md:mb-10">
-                  <span className="text-foreground/40 text-xs uppercase tracking-wider mb-2 md:mb-3 block">
-                    Common Types
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {activeCategory.machines.map((machine) => (
-                      <span 
-                        key={machine}
-                        className="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 border border-white/10 text-foreground/70 text-xs md:text-sm"
-                      >
-                        {machine}
-                      </span>
+                {/* Floating Specs Card */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="relative md:absolute mt-4 md:mt-0 md:-bottom-8 md:right-6 lg:right-10 bg-card/95 backdrop-blur-md border border-white/10 rounded-2xl p-5 md:p-6 shadow-2xl"
+                >
+                  <div className="flex justify-around md:justify-start gap-6 md:gap-8">
+                    {Object.entries(activeCategory.specs).map(([key, value]) => (
+                      <div key={key} className="text-center">
+                        <span className="text-primary text-lg md:text-xl font-serif block">{value}</span>
+                        <span className="text-foreground/40 text-[10px] md:text-xs uppercase tracking-wider">{key}</span>
+                      </div>
                     ))}
                   </div>
-                </div>
-
-                {/* Navigation Arrows */}
-                <div className="flex gap-3 md:gap-4">
-                  <ClickSpark sparkColor="#D4A574">
-                    <motion.button
-                      onClick={prevCategory}
-                      className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-primary/50 transition-all active:scale-95"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 text-foreground/70" />
-                    </motion.button>
-                  </ClickSpark>
-                  <ClickSpark sparkColor="#D4A574">
-                    <motion.button
-                      onClick={nextCategory}
-                      className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 hover:border-primary/50 transition-all active:scale-95"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-foreground/70" />
-                    </motion.button>
-                  </ClickSpark>
-                </div>
+                </motion.div>
               </motion.div>
+            </ScrollReveal>
+
+            {/* Content Side */}
+            <div className="lg:col-span-5 mt-12 lg:mt-0">
+              <ScrollReveal delay={0.2}>
+                <motion.div
+                  key={activeCategory.id + "-content"}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="text-primary/60 text-sm tracking-wider uppercase mb-3 block font-mono">
+                    {String(activeIndex + 1).padStart(2, '0')} / {String(machineCategories.length).padStart(2, '0')}
+                  </span>
+                  
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-serif text-foreground mb-3">
+                    {activeCategory.title}
+                  </h3>
+                  
+                  <p className="text-primary text-lg md:text-xl mb-5 font-medium">
+                    {activeCategory.subtitle}
+                  </p>
+                  
+                  <p className="text-foreground/60 text-base md:text-lg leading-relaxed mb-8">
+                    {activeCategory.description}
+                  </p>
+
+                  {/* Equipment Types */}
+                  <div className="mb-10">
+                    <span className="text-foreground/40 text-xs uppercase tracking-wider mb-3 block">
+                      Common Types
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {activeCategory.machines.map((machine) => (
+                        <span 
+                          key={machine}
+                          className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-foreground/70 text-sm hover:border-primary/30 hover:bg-primary/5 transition-colors"
+                        >
+                          {machine}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Navigation Arrows */}
+                  <div className="flex gap-4">
+                    <ClickSpark sparkColor="#D4A574">
+                      <motion.button
+                        onClick={prevCategory}
+                        className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black transition-all"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ArrowLeft className="w-5 h-5" />
+                      </motion.button>
+                    </ClickSpark>
+                    <ClickSpark sparkColor="#D4A574">
+                      <motion.button
+                        onClick={nextCategory}
+                        className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black transition-all"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ArrowRight className="w-5 h-5" />
+                      </motion.button>
+                    </ClickSpark>
+                  </div>
+                </motion.div>
+              </ScrollReveal>
             </div>
           </div>
 
           {/* Category Dots */}
-          <div className="flex justify-center gap-2 md:gap-3 mt-10 md:mt-16">
+          <div className="flex justify-center gap-3 mt-16 md:mt-20">
             {machineCategories.map((cat, i) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveIndex(i)}
-                className={`h-1 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   i === activeIndex 
-                    ? "w-8 md:w-12 bg-primary" 
-                    : "w-4 md:w-6 bg-white/20 hover:bg-white/40"
+                    ? "w-10 md:w-14 bg-primary" 
+                    : "w-5 md:w-7 bg-white/20 hover:bg-white/40"
                 }`}
               />
             ))}
@@ -333,161 +418,122 @@ export default function Machines() {
         </div>
       </section>
 
-      {/* Philosophy Section - Full Width Image */}
-      <section className="relative py-16 md:py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1920&q=80"
-            alt="Coffee brewing"
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background" />
-        </div>
+      {/* Quote Section */}
+      <section className="relative py-24 md:py-40 overflow-hidden">
+        <ParallaxImage 
+          src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1920&q=80"
+          alt="Coffee brewing"
+          className="absolute inset-0 opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background" />
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <Coffee className="w-10 h-10 md:w-12 md:h-12 text-primary mx-auto mb-6 md:mb-8" />
-              
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-serif mb-6 md:mb-8 leading-tight px-2">
-                "Great coffee is not about the most expensive equipment. 
-                <span className="text-primary"> It's about understanding your tools.</span>"
-              </h2>
-              
-              <p className="text-foreground/50 text-sm md:text-lg">
-                — The Craft of Brewing
-              </p>
-            </motion.div>
-          </div>
+          <ScrollReveal className="max-w-4xl mx-auto text-center">
+            <Coffee className="w-12 h-12 md:w-14 md:h-14 text-primary mx-auto mb-8" />
+            
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif mb-8 leading-tight">
+              "Great coffee is not about the most expensive equipment. 
+              <span className="text-primary"> It's about understanding your tools.</span>"
+            </h2>
+            
+            <p className="text-foreground/50 text-base md:text-lg">
+              — The Craft of Brewing
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Equipment Highlights - Asymmetric Grid */}
-      <section className="py-16 md:py-32 relative z-10">
+      {/* Equipment Highlights */}
+      <section className="py-20 md:py-32 relative z-10">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-10 md:mb-16"
-          >
-            <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-4 block">
+          <ScrollReveal className="mb-12 md:mb-16">
+            <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-3 block">
               Beyond the Machine
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif">
-              Essential <GradientText text="Equipment" />
+            <h2 className="text-4xl md:text-5xl font-serif">
+              Essential <GradientText text="Accessories" />
             </h2>
-          </motion.div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {equipmentHighlights.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-                viewport={{ once: true }}
-                className={`group relative overflow-hidden rounded-xl md:rounded-2xl ${
-                  i === 0 ? "sm:col-span-2 md:col-span-1 md:row-span-2" : ""
-                }`}
-              >
-                <div className={`${i === 0 ? "aspect-[16/9] sm:aspect-[2/1] md:aspect-[3/4]" : "aspect-[4/3]"}`}>
-                  <img 
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <ScrollReveal key={item.title} delay={i * 0.1}>
+                <div className="group relative overflow-hidden rounded-2xl md:rounded-3xl h-full">
+                  <div className="aspect-[4/5]">
+                    <img 
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  </div>
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                    <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-foreground/60 text-sm md:text-base leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                  <h3 className="text-xl md:text-2xl font-serif text-foreground mb-1 md:mb-2 group-hover:text-primary transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-foreground/60 text-xs md:text-sm line-clamp-2 md:line-clamp-none">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Specs Breakdown */}
-      <section className="py-16 md:py-32 relative z-10 border-t border-white/10">
+      {/* Key Variables */}
+      <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-10 md:mb-20"
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-3 md:mb-4">
+          <ScrollReveal className="text-center mb-14 md:mb-20">
+            <h2 className="text-4xl md:text-5xl font-serif mb-4">
               Key <GradientText text="Variables" />
             </h2>
-            <p className="text-foreground/50 text-sm md:text-base max-w-2xl mx-auto px-4">
+            <p className="text-foreground/50 text-base md:text-lg max-w-2xl mx-auto">
               Understanding the fundamental variables that affect every brewing method.
             </p>
-          </motion.div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
             {[
-              { icon: <Gauge className="w-6 h-6 md:w-8 md:h-8" />, title: "Grind Size", desc: "From fine espresso to coarse French press, grind size determines extraction rate and flavor profile." },
-              { icon: <Zap className="w-6 h-6 md:w-8 md:h-8" />, title: "Water Temperature", desc: "Optimal brewing temperature ranges from 90-96°C. Too hot burns, too cold under-extracts." },
-              { icon: <Droplets className="w-6 h-6 md:w-8 md:h-8" />, title: "Brew Ratio", desc: "The coffee-to-water ratio varies by method—1:2 for espresso, 1:15 for pour over, 1:8 for cold brew." },
-              { icon: <Coffee className="w-6 h-6 md:w-8 md:h-8" />, title: "Extraction Time", desc: "Each method has its sweet spot—25 seconds for espresso, 4 minutes for French press." },
+              { icon: <Gauge className="w-7 h-7 md:w-8 md:h-8" />, title: "Grind Size", desc: "From fine espresso to coarse French press, grind size determines extraction rate and flavor profile." },
+              { icon: <Zap className="w-7 h-7 md:w-8 md:h-8" />, title: "Water Temperature", desc: "Optimal brewing temperature ranges from 90-96°C. Too hot burns, too cold under-extracts." },
+              { icon: <Droplets className="w-7 h-7 md:w-8 md:h-8" />, title: "Brew Ratio", desc: "The coffee-to-water ratio varies by method—1:2 for espresso, 1:15 for pour over, 1:8 for cold brew." },
+              { icon: <Coffee className="w-7 h-7 md:w-8 md:h-8" />, title: "Extraction Time", desc: "Each method has its sweet spot—25 seconds for espresso, 4 minutes for French press." },
             ].map((spec, i) => (
-              <motion.div
-                key={spec.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                viewport={{ once: true }}
-                className="text-center group p-3 md:p-0"
-              >
-                <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-6 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+              <ScrollReveal key={spec.title} delay={i * 0.1} className="text-center group">
+                <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all duration-300">
                   {spec.icon}
                 </div>
-                <h3 className="text-base md:text-xl font-serif text-foreground mb-2 md:mb-3">{spec.title}</h3>
-                <p className="text-foreground/50 text-xs md:text-sm leading-relaxed hidden sm:block">{spec.desc}</p>
-              </motion.div>
+                <h3 className="text-lg md:text-xl font-serif text-foreground mb-3">{spec.title}</h3>
+                <p className="text-foreground/50 text-sm leading-relaxed hidden sm:block">{spec.desc}</p>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Footer CTA */}
-      <section className="py-16 md:py-24 relative z-10">
+      <section className="py-20 md:py-28 relative z-10">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-foreground/40 text-xs md:text-sm uppercase tracking-wider mb-3 md:mb-4">
+          <ScrollReveal>
+            <p className="text-foreground/40 text-sm uppercase tracking-wider mb-4">
               Continue Exploring
             </p>
             <Link href="/process">
               <Magnetic>
                 <motion.span 
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer inline-flex items-center gap-2 md:gap-4"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer inline-flex items-center gap-4"
                   whileHover={{ x: 10 }}
                 >
                   Discover the Process
-                  <ArrowRight className="w-5 h-5 md:w-8 md:h-8" />
+                  <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
                 </motion.span>
               </Magnetic>
             </Link>
-          </motion.div>
+          </ScrollReveal>
         </div>
       </section>
     </div>
