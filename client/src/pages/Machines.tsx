@@ -9,13 +9,21 @@ import GradientText from "@/components/reactbits/GradientText";
 import FloatingParticles from "@/components/reactbits/FloatingParticles";
 import ClickSpark from "@/components/reactbits/ClickSpark";
 
+// Import local machine images
+import espressoImg from "@assets/stock_images/machines/esspressomachine.webp";
+import pourOverImg from "@assets/stock_images/machines/pour_over.jpg";
+import immersionImg from "@assets/stock_images/machines/Immersion_Brewers.jpg";
+import grinderImg from "@assets/stock_images/machines/grinder.jpg";
+import coldBrewImg from "@assets/stock_images/machines/cold_brew_system.jpg";
+import stovetopImg from "@assets/stock_images/machines/stovetop.jpg";
+
 const machineCategories = [
   {
     id: "espresso-machines",
     title: "Espresso Machines",
     subtitle: "The Heart of Coffee Culture",
     description: "Espresso machines use pressure to force hot water through finely-ground coffee, creating a concentrated shot with rich crema. From pump-driven to lever-operated, these machines range from compact home units to multi-group commercial workhorses that power busy cafes.",
-    image: "https://images.unsplash.com/photo-1585515320310-259814833e62?w=1200&q=80",
+    image: espressoImg,
     machines: ["Pump-Driven", "Lever Machines", "Semi-Automatic", "Super-Automatic"],
     specs: { pressure: "9 bar", temp: "90-96°C", extraction: "25-30 sec" }
   },
@@ -24,7 +32,7 @@ const machineCategories = [
     title: "Pour Over Equipment",
     subtitle: "Precision in Simplicity",
     description: "Pour over brewing offers complete control over every variable—water temperature, pour rate, and bloom time. This method highlights the delicate flavors and origin characteristics of single-origin beans, making it a favorite among specialty coffee enthusiasts.",
-    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80",
+    image: pourOverImg,
     machines: ["V60 Dripper", "Chemex", "Kalita Wave", "Origami Dripper"],
     specs: { ratio: "1:15-17", time: "3-4 min", grind: "Medium-Fine" }
   },
@@ -33,7 +41,7 @@ const machineCategories = [
     title: "Immersion Brewers",
     subtitle: "Full-Bodied Richness",
     description: "Immersion brewing steeps coffee grounds directly in water, extracting bold flavors and natural oils. The French Press remains iconic, while newer designs like the AeroPress offer versatility and portability without sacrificing depth of flavor.",
-    image: "https://images.unsplash.com/photo-1572119865084-43c285814d63?w=1200&q=80",
+    image: immersionImg,
     machines: ["French Press", "AeroPress", "Clever Dripper", "Siphon Brewer"],
     specs: { ratio: "1:12-15", time: "4-5 min", grind: "Coarse" }
   },
@@ -42,7 +50,7 @@ const machineCategories = [
     title: "Coffee Grinders",
     subtitle: "Where Quality Begins",
     description: "The grinder is arguably more important than the brewing device itself. Burr grinders provide consistent particle size essential for even extraction, while blade grinders offer affordability. From hand grinders to commercial flat burrs, the right grinder transforms your coffee.",
-    image: "https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?w=1200&q=80",
+    image: grinderImg,
     machines: ["Flat Burr", "Conical Burr", "Hand Grinders", "Commercial Mills"],
     specs: { burrs: "Steel/Ceramic", settings: "40+ steps", retention: "< 1g" }
   },
@@ -51,7 +59,7 @@ const machineCategories = [
     title: "Cold Brew Systems",
     subtitle: "Patience Rewarded",
     description: "Cold brew extracts coffee slowly using cold or room temperature water over 12-24 hours. The result is a smooth, naturally sweet concentrate with lower acidity. From simple mason jar setups to commercial towers, cold brew equipment suits every scale.",
-    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1200&q=80",
+    image: coldBrewImg,
     machines: ["Toddy System", "Kyoto Drip Tower", "Filtron", "Immersion Pitchers"],
     specs: { ratio: "1:8", time: "12-24 hrs", temp: "Cold/Room" }
   },
@@ -60,7 +68,7 @@ const machineCategories = [
     title: "Stovetop Brewers",
     subtitle: "Traditional Craftsmanship",
     description: "The Moka pot has been an Italian kitchen staple since 1933, producing strong, espresso-style coffee on any stovetop. These aluminum or stainless steel brewers use steam pressure to push water through coffee, creating a rich and intense brew.",
-    image: "https://images.unsplash.com/photo-1621555470436-d36e9683bdb1?w=1200&q=80",
+    image: stovetopImg,
     machines: ["Moka Pot", "Percolator", "Turkish Ibrik", "Vietnamese Phin"],
     specs: { pressure: "1-2 bar", time: "5-7 min", heat: "Stovetop" }
   }
@@ -126,7 +134,7 @@ export default function Machines() {
           className="absolute inset-0"
         >
           <img 
-            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1920&q=80"
+            src={espressoImg}
             alt="Espresso Machine Detail" 
             className="w-full h-full object-cover"
           />

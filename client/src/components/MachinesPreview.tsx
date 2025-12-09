@@ -9,13 +9,19 @@ import GradientText from "./reactbits/GradientText";
 import ShinyButton from "./reactbits/ShinyButton";
 import ClickSpark from "./reactbits/ClickSpark";
 
+// Import local machine images
+import espressoImg from "@assets/stock_images/machines/esspressomachine.webp";
+import pourOverImg from "@assets/stock_images/machines/pour_over.jpg";
+import grinderImg from "@assets/stock_images/machines/grinder.jpg";
+import stovetopImg from "@assets/stock_images/machines/stovetop.jpg";
+
 const equipmentCards = [
   {
     id: "espresso",
     icon: <Coffee className="w-5 h-5 md:w-6 md:h-6" />,
     title: "Espresso",
     subtitle: "Pressure Brewing",
-    image: "https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&q=80",
+    image: espressoImg,
     stat: "9",
     statLabel: "Bar",
   },
@@ -24,7 +30,7 @@ const equipmentCards = [
     icon: <Droplets className="w-5 h-5 md:w-6 md:h-6" />,
     title: "Pour Over",
     subtitle: "Precision Drip",
-    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80",
+    image: pourOverImg,
     stat: "96",
     statLabel: "°C",
   },
@@ -33,7 +39,7 @@ const equipmentCards = [
     icon: <Settings className="w-5 h-5 md:w-6 md:h-6" />,
     title: "Grinders",
     subtitle: "Burr Technology",
-    image: "https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?w=800&q=80",
+    image: grinderImg,
     stat: "40",
     statLabel: "Steps",
   },
@@ -42,7 +48,7 @@ const equipmentCards = [
     icon: <Flame className="w-5 h-5 md:w-6 md:h-6" />,
     title: "Stovetop",
     subtitle: "Traditional Craft",
-    image: "https://images.unsplash.com/photo-1621555470436-d36e9683bdb1?w=800&q=80",
+    image: stovetopImg,
     stat: "2",
     statLabel: "Bar",
   },
