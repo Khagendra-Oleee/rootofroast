@@ -65,7 +65,7 @@ export default function Space() {
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground overflow-hidden">
       <LiquidBackground />
-      <FloatingParticles count={20} colors={["#D4A574", "#C67B48", "#6C7A5B"]} />
+      <FloatingParticles count={6} colors={["#D4A574", "#C67B48", "#6C7A5B"]} />
       
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}

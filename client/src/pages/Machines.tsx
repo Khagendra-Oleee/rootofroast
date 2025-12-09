@@ -122,7 +122,7 @@ export default function Machines() {
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground">
       <LiquidBackground />
-      <FloatingParticles count={12} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
+      <FloatingParticles count={6} colors={["#D4A574", "#C67B48"]} />
       
       {/* Navigation */}
       <Navigation />

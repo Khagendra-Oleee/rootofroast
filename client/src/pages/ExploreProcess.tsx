@@ -139,7 +139,7 @@ export default function ExploreProcess() {
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-foreground overflow-hidden">
       <LiquidBackground />
-      <FloatingParticles count={15} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
+      <FloatingParticles count={6} colors={["#D4A574", "#C67B48", "#8B5A2B"]} />
       
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
