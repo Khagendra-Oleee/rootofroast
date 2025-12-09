@@ -46,7 +46,7 @@ export default function Navigation() {
     { name: "Projects", href: "#collection" },
     { name: "Origins", href: "#origins" },
     { name: "Process", href: "#brew" },
-    { name: "Machines", href: "/machines" },
+    { name: "Machines", href: "#machines" },
     { name: "Philosophy", href: "#story" },
   ];
 
