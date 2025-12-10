@@ -19,6 +19,7 @@ import caffeLatteImg from "@assets/stock_images/caffe_latte_coffee_w_c6ee55c7.jp
 import coldBrewImg from "@assets/stock_images/cold_brew_coffee_gla_6a71ee3b.jpg";
 import doppioImg from "@assets/stock_images/doppio_double_espres_9edb1646.jpg";
 import espressoVideo from "@assets/stock_images/esspresso.mp4";
+import cappuccinoVideo from "@assets/stock_images/cappuccinoo.mp4";
 
 const coffeeProcesses = [
   {
@@ -46,7 +47,7 @@ const coffeeProcesses = [
     tagline: "Harmony of Espresso & Foam",
     description: "The perfect balance of bold espresso, steamed milk, and velvety microfoam.",
     image: cappuccinoImg,
-    videoUrl: espressoVideo,
+    videoUrl: cappuccinoVideo,
     isLocalVideo: true,
     duration: "2-3 min",
     temperature: "65-70°C",
@@ -65,7 +66,7 @@ const coffeeProcesses = [
     tagline: "Smooth & Comforting",
     description: "A gentler espresso experience with more steamed milk and a thin layer of foam.",
     image: caffeLatteImg,
-    videoUrl: espressoVideo,
+    videoUrl: cappuccinoVideo,
     isLocalVideo: true,
     duration: "3-4 min",
     temperature: "60-65°C",
