@@ -536,6 +536,106 @@ export default function TampersTools() {
           </div>
         </div>
       </section>
+
+      {/* Buying Guide */}
+      <section className="py-20 md:py-32 relative z-10 bg-card/20 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif mb-4">
+                Building Your <GradientText text="Toolkit" />
+              </h2>
+              <p className="text-foreground/50 text-lg max-w-2xl mx-auto">
+                Essential tools for every level of espresso preparation.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Starter Kit",
+                budget: "$50-100",
+                features: ["Quality tamper", "Basic distribution tool", "Cleaning brush", "Portafilter funnel"],
+                recommendation: "Flat base tamper + simple distributor"
+              },
+              {
+                title: "Intermediate",
+                budget: "$100-200",
+                features: ["Calibrated tamper", "WDT tool", "Puck screen", "Precision distributor"],
+                recommendation: "Calibrated tamper + WDT needles"
+              },
+              {
+                title: "Professional",
+                budget: "$200-400",
+                features: ["Premium tamper set", "Advanced WDT", "Multiple screens", "Complete toolkit"],
+                recommendation: "Full professional prep station setup"
+              }
+            ].map((guide, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>
+                <div className="bg-card/50 border border-white/10 rounded-2xl p-8 hover:border-primary/30 transition-all h-full flex flex-col">
+                  <h3 className="text-2xl font-serif text-foreground mb-3">
+                    {guide.title}
+                  </h3>
+                  <div className="text-primary text-3xl font-serif mb-6">
+                    {guide.budget}
+                  </div>
+                  <ul className="space-y-3 mb-6 flex-grow">
+                    {guide.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-3 text-foreground/70">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pt-6 border-t border-white/10">
+                    <p className="text-foreground/40 text-xs uppercase tracking-wider mb-2">Recommended</p>
+                    <p className="text-foreground text-sm">{guide.recommendation}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center">
+              <p className="text-foreground/40 text-sm uppercase tracking-[0.3em] mb-6">
+                Continue Exploring
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <Link href="/scales-timers">
+                  <Magnetic>
+                    <motion.div 
+                      className="inline-flex items-center gap-3 text-2xl md:text-3xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <span>Scales & Timers</span>
+                      <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform" />
+                    </motion.div>
+                  </Magnetic>
+                </Link>
+                <span className="text-foreground/20 hidden sm:block">•</span>
+                <Link href="/kettles">
+                  <Magnetic>
+                    <motion.div 
+                      className="inline-flex items-center gap-3 text-2xl md:text-3xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <span>Kettles</span>
+                      <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform" />
+                    </motion.div>
+                  </Magnetic>
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
     </div>
   );
 }

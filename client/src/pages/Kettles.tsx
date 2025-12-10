@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, Flame, Thermometer, Droplets, Gauge, Zap, Award } from "lucide-react";
+import { ArrowLeft, Flame, Thermometer, Droplets, Gauge, Zap, Award, ArrowRight, Check } from "lucide-react";
 import { Link } from "wouter";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
@@ -427,15 +427,18 @@ export default function Kettles() {
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { title: "The Bloom", desc: "Start with 2x coffee weight in water, pour gently in circular motion. Wait 30-45 seconds for CO2 release." },
-                { title: "Spiral Pour", desc: "Pour in concentric circles from center outward, maintaining consistent flow rate for even extraction." },
-                { title: "Pulse Pouring", desc: "Multiple small pours instead of continuous stream. Allows better control and prevents over-extraction." },
-                { title: "Center Pour", desc: "Keep water stream in the center for concentrated extraction. Used for specific flavor profiles." },
-                { title: "Agitation Control", desc: "Adjust pour height and speed to control turbulence. Higher = more agitation, lower = gentler." },
-                { title: "Final Drawdown", desc: "Let water fully drain before removing dripper. Aim for 3-4 minute total brew time." }
+                { num: "01", title: "The Bloom", desc: "Start with 2x coffee weight in water, pour gently in circular motion. Wait 30-45 seconds for CO2 release." },
+                { num: "02", title: "Spiral Pour", desc: "Pour in concentric circles from center outward, maintaining consistent flow rate for even extraction." },
+                { num: "03", title: "Pulse Pouring", desc: "Multiple small pours instead of continuous stream. Allows better control and prevents over-extraction." },
+                { num: "04", title: "Center Pour", desc: "Keep water stream in the center for concentrated extraction. Used for specific flavor profiles." },
+                { num: "05", title: "Agitation Control", desc: "Adjust pour height and speed to control turbulence. Higher = more agitation, lower = gentler." },
+                { num: "06", title: "Final Drawdown", desc: "Let water fully drain before removing dripper. Aim for 3-4 minute total brew time." }
               ].map((technique, i) => (
-                <ScrollReveal key={technique.title} direction="up" delay={i * 0.1}>
-                  <div className="bg-card/30 border border-white/10 rounded-xl p-6 hover:border-primary/30 transition-all">
+                <ScrollReveal key={i} direction="up" delay={i * 0.1}>
+                  <div className="group bg-card/30 border border-white/10 rounded-xl p-6 hover:bg-card/50 hover:border-primary/30 transition-all">
+                    <div className="text-4xl font-serif text-primary/20 mb-3 group-hover:text-primary/40 transition-colors">
+                      {technique.num}
+                    </div>
                     <h3 className="text-lg md:text-xl font-serif text-foreground mb-2">
                       {technique.title}
                     </h3>
@@ -447,6 +450,106 @@ export default function Kettles() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Buying Guide */}
+      <section className="py-20 md:py-32 relative z-10 bg-card/20 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif mb-4">
+                Choosing Your <GradientText text="Kettle" />
+              </h2>
+              <p className="text-foreground/50 text-lg max-w-2xl mx-auto">
+                Find the perfect kettle for your brewing style and budget.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Entry Level",
+                budget: "$40-80",
+                features: ["Stovetop compatible", "Gooseneck spout", "Durable steel", "0.8-1.0L capacity"],
+                recommendation: "Stovetop gooseneck for manual control"
+              },
+              {
+                title: "Enthusiast",
+                budget: "$80-150",
+                features: ["Variable temperature", "±1°C accuracy", "Hold function", "Fast heating"],
+                recommendation: "Electric kettle with precise temp control"
+              },
+              {
+                title: "Professional",
+                budget: "$150-250",
+                features: ["App connectivity", "Custom profiles", "Premium build", "Advanced features"],
+                recommendation: "Smart kettle with programmable settings"
+              }
+            ].map((guide, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>
+                <div className="bg-card/50 border border-white/10 rounded-2xl p-8 hover:border-primary/30 transition-all h-full flex flex-col">
+                  <h3 className="text-2xl font-serif text-foreground mb-3">
+                    {guide.title}
+                  </h3>
+                  <div className="text-primary text-3xl font-serif mb-6">
+                    {guide.budget}
+                  </div>
+                  <ul className="space-y-3 mb-6 flex-grow">
+                    {guide.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-3 text-foreground/70">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pt-6 border-t border-white/10">
+                    <p className="text-foreground/40 text-xs uppercase tracking-wider mb-2">Recommended</p>
+                    <p className="text-foreground text-sm">{guide.recommendation}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center">
+              <p className="text-foreground/40 text-sm uppercase tracking-[0.3em] mb-6">
+                Continue Exploring
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <Link href="/scales-timers">
+                  <Magnetic>
+                    <motion.div 
+                      className="inline-flex items-center gap-3 text-2xl md:text-3xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <span>Scales & Timers</span>
+                      <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform" />
+                    </motion.div>
+                  </Magnetic>
+                </Link>
+                <span className="text-foreground/20 hidden sm:block">•</span>
+                <Link href="/tampers-tools">
+                  <Magnetic>
+                    <motion.div 
+                      className="inline-flex items-center gap-3 text-2xl md:text-3xl font-serif text-foreground hover:text-primary transition-colors cursor-pointer group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <span>Tampers & Tools</span>
+                      <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform" />
+                    </motion.div>
+                  </Magnetic>
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </div>
