@@ -516,21 +516,21 @@ export default function ScalesTimers() {
                 budget: "$30-80",
                 features: ["0.1g accuracy", "Built-in timer", "Water-resistant", "Compact size"],
                 recommendation: "Digital precision scale with timer function",
-                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1606791405792-1004f1718d0c?w=600&q=80"
               },
               {
                 title: "Espresso Focus",
                 budget: "$80-150",
                 features: ["Fast refresh rate", "Heat-resistant", "Compact footprint", "Shot timer"],
                 recommendation: "Dedicated espresso scale with quick response",
-                image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=600&q=80"
               },
               {
                 title: "Professional Use",
                 budget: "$150-300",
                 features: ["Bluetooth connectivity", "App integration", "Multiple profiles", "Commercial durability"],
                 recommendation: "Smart scale with data tracking capabilities",
-                image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80"
               }
             ].map((guide, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>

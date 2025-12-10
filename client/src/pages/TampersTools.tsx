@@ -558,21 +558,21 @@ export default function TampersTools() {
                 budget: "$50-100",
                 features: ["Quality tamper", "Basic distribution tool", "Cleaning brush", "Portafilter funnel"],
                 recommendation: "Flat base tamper + simple distributor",
-                image: "https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80"
               },
               {
                 title: "Intermediate",
                 budget: "$100-200",
                 features: ["Calibrated tamper", "WDT tool", "Puck screen", "Precision distributor"],
                 recommendation: "Calibrated tamper + WDT needles",
-                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80"
               },
               {
                 title: "Professional",
                 budget: "$200-400",
                 features: ["Premium tamper set", "Advanced WDT", "Multiple screens", "Complete toolkit"],
                 recommendation: "Full professional prep station setup",
-                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80"
               }
             ].map((guide, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>

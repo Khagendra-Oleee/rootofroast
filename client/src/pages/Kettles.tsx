@@ -474,21 +474,21 @@ export default function Kettles() {
                 budget: "$40-80",
                 features: ["Stovetop compatible", "Gooseneck spout", "Durable steel", "0.8-1.0L capacity"],
                 recommendation: "Stovetop gooseneck for manual control",
-                image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80"
               },
               {
                 title: "Enthusiast",
                 budget: "$80-150",
                 features: ["Variable temperature", "±1°C accuracy", "Hold function", "Fast heating"],
                 recommendation: "Electric kettle with precise temp control",
-                image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1563822249366-6b5d2f6c83f6?w=600&q=80"
               },
               {
                 title: "Professional",
                 budget: "$150-250",
                 features: ["App connectivity", "Custom profiles", "Premium build", "Advanced features"],
                 recommendation: "Smart kettle with programmable settings",
-                image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80"
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80"
               }
             ].map((guide, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>
