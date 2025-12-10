@@ -515,40 +515,56 @@ export default function ScalesTimers() {
                 title: "Home Brewing",
                 budget: "$30-80",
                 features: ["0.1g accuracy", "Built-in timer", "Water-resistant", "Compact size"],
-                recommendation: "Digital precision scale with timer function"
+                recommendation: "Digital precision scale with timer function",
+                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80"
               },
               {
                 title: "Espresso Focus",
                 budget: "$80-150",
                 features: ["Fast refresh rate", "Heat-resistant", "Compact footprint", "Shot timer"],
-                recommendation: "Dedicated espresso scale with quick response"
+                recommendation: "Dedicated espresso scale with quick response",
+                image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80"
               },
               {
                 title: "Professional Use",
                 budget: "$150-300",
                 features: ["Bluetooth connectivity", "App integration", "Multiple profiles", "Commercial durability"],
-                recommendation: "Smart scale with data tracking capabilities"
+                recommendation: "Smart scale with data tracking capabilities",
+                image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80"
               }
             ].map((guide, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>
-                <div className="bg-card/50 border border-white/10 rounded-2xl p-8 hover:border-primary/30 transition-all h-full flex flex-col">
-                  <h3 className="text-2xl font-serif text-foreground mb-3">
-                    {guide.title}
-                  </h3>
-                  <div className="text-primary text-3xl font-serif mb-6">
-                    {guide.budget}
+                <div className="group bg-card/50 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-all h-full flex flex-col">
+                  {/* Image */}
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={guide.image}
+                      alt={guide.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
                   </div>
-                  <ul className="space-y-3 mb-6 flex-grow">
-                    {guide.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-3 text-foreground/70">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="pt-6 border-t border-white/10">
-                    <p className="text-foreground/40 text-xs uppercase tracking-wider mb-2">Recommended</p>
-                    <p className="text-foreground text-sm">{guide.recommendation}</p>
+                  
+                  {/* Content */}
+                  <div className="p-8 flex flex-col flex-grow">
+                    <h3 className="text-2xl font-serif text-foreground mb-3">
+                      {guide.title}
+                    </h3>
+                    <div className="text-primary text-3xl font-serif mb-6">
+                      {guide.budget}
+                    </div>
+                    <ul className="space-y-3 mb-6 flex-grow">
+                      {guide.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-3 text-foreground/70">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="pt-6 border-t border-white/10">
+                      <p className="text-foreground/40 text-xs uppercase tracking-wider mb-2">Recommended</p>
+                      <p className="text-foreground text-sm">{guide.recommendation}</p>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>

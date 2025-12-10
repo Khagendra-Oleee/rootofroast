@@ -557,40 +557,56 @@ export default function TampersTools() {
                 title: "Starter Kit",
                 budget: "$50-100",
                 features: ["Quality tamper", "Basic distribution tool", "Cleaning brush", "Portafilter funnel"],
-                recommendation: "Flat base tamper + simple distributor"
+                recommendation: "Flat base tamper + simple distributor",
+                image: "https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=600&q=80"
               },
               {
                 title: "Intermediate",
                 budget: "$100-200",
                 features: ["Calibrated tamper", "WDT tool", "Puck screen", "Precision distributor"],
-                recommendation: "Calibrated tamper + WDT needles"
+                recommendation: "Calibrated tamper + WDT needles",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80"
               },
               {
                 title: "Professional",
                 budget: "$200-400",
                 features: ["Premium tamper set", "Advanced WDT", "Multiple screens", "Complete toolkit"],
-                recommendation: "Full professional prep station setup"
+                recommendation: "Full professional prep station setup",
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80"
               }
             ].map((guide, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.15} scale>
-                <div className="bg-card/50 border border-white/10 rounded-2xl p-8 hover:border-primary/30 transition-all h-full flex flex-col">
-                  <h3 className="text-2xl font-serif text-foreground mb-3">
-                    {guide.title}
-                  </h3>
-                  <div className="text-primary text-3xl font-serif mb-6">
-                    {guide.budget}
+                <div className="group bg-card/50 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-all h-full flex flex-col">
+                  {/* Image */}
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={guide.image}
+                      alt={guide.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
                   </div>
-                  <ul className="space-y-3 mb-6 flex-grow">
-                    {guide.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-3 text-foreground/70">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="pt-6 border-t border-white/10">
-                    <p className="text-foreground/40 text-xs uppercase tracking-wider mb-2">Recommended</p>
-                    <p className="text-foreground text-sm">{guide.recommendation}</p>
+                  
+                  {/* Content */}
+                  <div className="p-8 flex flex-col flex-grow">
+                    <h3 className="text-2xl font-serif text-foreground mb-3">
+                      {guide.title}
+                    </h3>
+                    <div className="text-primary text-3xl font-serif mb-6">
+                      {guide.budget}
+                    </div>
+                    <ul className="space-y-3 mb-6 flex-grow">
+                      {guide.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-3 text-foreground/70">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="pt-6 border-t border-white/10">
+                      <p className="text-foreground/40 text-xs uppercase tracking-wider mb-2">Recommended</p>
+                      <p className="text-foreground text-sm">{guide.recommendation}</p>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
