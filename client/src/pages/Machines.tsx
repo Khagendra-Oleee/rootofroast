@@ -472,6 +472,160 @@ export default function Machines() {
         </div>
       </section>
 
+      {/* Portable Espresso Machines */}
+      <section className="py-20 md:py-32 relative z-10 border-t border-white/10 bg-card/20">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-12 md:mb-16">
+              <span className="text-primary/60 text-xs md:text-sm tracking-[0.2em] uppercase mb-3 block">
+                Coffee On The Go
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">
+                Portable <GradientText text="Espresso Machines" />
+              </h2>
+              <p className="text-foreground/60 text-lg md:text-xl max-w-3xl mx-auto">
+                Experience café-quality espresso anywhere. Compact, powerful, and designed for the modern coffee enthusiast who refuses to compromise on quality.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-16">
+            {/* Main Image */}
+            <ScrollReveal direction="left" delay={0.2}>
+              <div className="relative aspect-[4/3] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=1200&q=80"
+                  alt="Portable Espresso Machine"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </ScrollReveal>
+
+            {/* Features */}
+            <ScrollReveal direction="right" delay={0.3}>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-4">
+                    Freedom Without Compromise
+                  </h3>
+                  <p className="text-foreground/60 text-base md:text-lg leading-relaxed">
+                    Portable espresso machines have revolutionized coffee culture, bringing professional-grade brewing to camping trips, office desks, and travel adventures. These compact powerhouses deliver authentic espresso pressure without requiring electricity or bulky equipment.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { label: "Pressure", value: "9-15 bar", icon: <Gauge className="w-5 h-5" /> },
+                    { label: "Weight", value: "0.5-1.5 kg", icon: <Coffee className="w-5 h-5" /> },
+                    { label: "Capacity", value: "50-80 ml", icon: <Droplets className="w-5 h-5" /> },
+                    { label: "Power", value: "Manual/Battery", icon: <Zap className="w-5 h-5" /> }
+                  ].map((spec, i) => (
+                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+                      <div className="flex items-center gap-2 text-primary mb-2">
+                        {spec.icon}
+                        <span className="text-xs uppercase tracking-wider text-foreground/40">{spec.label}</span>
+                      </div>
+                      <span className="text-foreground font-medium text-lg">{spec.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Key Features Grid */}
+          <ScrollReveal direction="up" delay={0.4}>
+            <div className="mb-12">
+              <h3 className="text-2xl md:text-3xl font-serif text-center mb-8">
+                Key <GradientText text="Features" />
+              </h3>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Manual Pump Action",
+                description: "Hand-operated pressure system generates 9-15 bars, matching commercial machines without electricity.",
+                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80"
+              },
+              {
+                title: "Compact Design",
+                description: "Fits in backpacks and carry-ons. Weighs less than a water bottle but delivers full espresso power.",
+                image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80"
+              },
+              {
+                title: "No Power Required",
+                description: "Completely manual operation means coffee anywhere—mountains, beaches, or remote offices.",
+                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80"
+              },
+              {
+                title: "Easy Cleanup",
+                description: "Simple disassembly and minimal parts make cleaning quick and hassle-free, even on the go.",
+                image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=600&q=80"
+              },
+              {
+                title: "Durable Build",
+                description: "Aircraft-grade aluminum and stainless steel construction withstands travel and outdoor conditions.",
+                image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80"
+              },
+              {
+                title: "Versatile Brewing",
+                description: "Compatible with ground coffee or ESE pods. Adjustable pressure for different roast profiles.",
+                image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80"
+              }
+            ].map((feature, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.1} scale>
+                <div className="group bg-card/50 border border-white/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-all">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={feature.image}
+                      alt={feature.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h4 className="text-lg md:text-xl font-serif text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {feature.title}
+                    </h4>
+                    <p className="text-foreground/60 text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Popular Models */}
+          <ScrollReveal direction="up" delay={0.5}>
+            <div className="mt-16 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20">
+              <h3 className="text-2xl md:text-3xl font-serif text-center mb-8">
+                Popular <GradientText text="Models" />
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  { name: "Wacaco Nanopresso", type: "Manual Pump", price: "$70-90", highlight: "Most Portable" },
+                  { name: "Flair Signature", type: "Lever Press", price: "$200-250", highlight: "Best Quality" },
+                  { name: "Staresso Pro", type: "Hybrid System", price: "$80-120", highlight: "Most Versatile" }
+                ].map((model, i) => (
+                  <div key={i} className="p-6 rounded-2xl bg-card/50 border border-white/10 hover:bg-card/70 hover:border-primary/30 transition-all">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs mb-4">
+                      {model.highlight}
+                    </div>
+                    <h4 className="text-xl font-serif text-foreground mb-2">{model.name}</h4>
+                    <p className="text-foreground/60 text-sm mb-3">{model.type}</p>
+                    <p className="text-primary text-lg font-medium">{model.price}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Key Variables */}
       <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
         <div className="container mx-auto px-4 md:px-6">
