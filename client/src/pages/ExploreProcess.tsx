@@ -317,7 +317,6 @@ export default function ExploreProcess() {
                     className="w-full h-full object-cover"
                     autoPlay
                     loop
-                    muted
                     playsInline
                     disablePictureInPicture
                     controlsList="nodownload nofullscreen noremoteplayback"
