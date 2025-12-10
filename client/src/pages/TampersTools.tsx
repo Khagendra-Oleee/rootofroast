@@ -137,7 +137,7 @@ export default function TampersTools() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-all">
                   <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                 </div>
-                <span className="text-sm md:text-base font-medium tracking-wide hidden sm:block">Back to Equipment</span>
+                <span className="text-sm md:text-base font-medium tracking-wide">Back</span>
               </motion.div>
             </Magnetic>
           </Link>

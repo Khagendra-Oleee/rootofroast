@@ -153,7 +153,7 @@ export default function Machines() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-all">
                   <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                 </div>
-                <span className="text-sm md:text-base font-medium tracking-wide hidden sm:block">Back</span>
+                <span className="text-sm md:text-base font-medium tracking-wide">Back</span>
               </motion.div>
             </Magnetic>
           </Link>
@@ -651,7 +651,7 @@ export default function Machines() {
                   {spec.icon}
                 </div>
                 <h3 className="text-lg md:text-xl font-serif text-foreground mb-3">{spec.title}</h3>
-                <p className="text-foreground/50 text-sm leading-relaxed hidden sm:block">{spec.desc}</p>
+                <p className="text-foreground/50 text-xs sm:text-sm leading-relaxed">{spec.desc}</p>
               </ScrollReveal>
             ))}
           </div>
