@@ -16,6 +16,7 @@ import immersionImg from "@assets/stock_images/machines/Immersion_Brewers.jpg";
 import grinderImg from "@assets/stock_images/machines/grinder.jpg";
 import coldBrewImg from "@assets/stock_images/machines/cold_brew_system.jpg";
 import stovetopImg from "@assets/stock_images/machines/stovetop.jpg";
+import portableEspressoImg from "@assets/stock_images/machines/portable_esspresso_machine.webp";
 
 const machineCategories = [
   {
@@ -494,7 +495,7 @@ export default function Machines() {
             <ScrollReveal direction="left" delay={0.2}>
               <div className="relative aspect-[4/3] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=1200&q=80"
+                  src={portableEspressoImg}
                   alt="Portable Espresso Machine"
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -548,32 +549,32 @@ export default function Machines() {
               {
                 title: "Manual Pump Action",
                 description: "Hand-operated pressure system generates 9-15 bars, matching commercial machines without electricity.",
-                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80"
+                image: portableEspressoImg
               },
               {
                 title: "Compact Design",
                 description: "Fits in backpacks and carry-ons. Weighs less than a water bottle but delivers full espresso power.",
-                image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80"
+                image: espressoImg
               },
               {
                 title: "No Power Required",
                 description: "Completely manual operation means coffee anywhere—mountains, beaches, or remote offices.",
-                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80"
+                image: pourOverImg
               },
               {
                 title: "Easy Cleanup",
                 description: "Simple disassembly and minimal parts make cleaning quick and hassle-free, even on the go.",
-                image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=600&q=80"
+                image: immersionImg
               },
               {
                 title: "Durable Build",
                 description: "Aircraft-grade aluminum and stainless steel construction withstands travel and outdoor conditions.",
-                image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80"
+                image: grinderImg
               },
               {
                 title: "Versatile Brewing",
                 description: "Compatible with ground coffee or ESE pods. Adjustable pressure for different roast profiles.",
-                image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80"
+                image: stovetopImg
               }
             ].map((feature, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.1} scale>
