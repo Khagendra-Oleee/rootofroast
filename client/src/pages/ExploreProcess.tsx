@@ -20,6 +20,8 @@ import coldBrewImg from "@assets/stock_images/cold_brew_coffee_gla_6a71ee3b.jpg"
 import doppioImg from "@assets/stock_images/doppio_double_espres_9edb1646.jpg";
 import espressoVideo from "@assets/stock_images/esspresso.mp4";
 import cappuccinoVideo from "@assets/stock_images/cappuccinoo.mp4";
+import coldBrewVideo from "@assets/stock_images/cold_brew.mp4";
+import doppioVideo from "@assets/stock_images/doppio.mp4";
 
 const coffeeProcesses = [
   {
@@ -85,7 +87,7 @@ const coffeeProcesses = [
     tagline: "Patience Rewarded",
     description: "Slow-steeped for 12-24 hours, resulting in a smooth, naturally sweet concentrate.",
     image: coldBrewImg,
-    videoUrl: espressoVideo,
+    videoUrl: coldBrewVideo,
     isLocalVideo: true,
     duration: "12-24 hours",
     temperature: "Room/Cold",
@@ -104,7 +106,7 @@ const coffeeProcesses = [
     tagline: "Double the Intensity",
     description: "Two shots of pure espresso power - for those who want the full experience.",
     image: doppioImg,
-    videoUrl: espressoVideo,
+    videoUrl: doppioVideo,
     isLocalVideo: true,
     duration: "25-30 sec",
     temperature: "92-96°C",
