@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, Wrench, Target, Layers, Zap, Award, CircleDot } from "lucide-react";
+import { ArrowLeft, ArrowRight, Wrench, Target, Layers, Zap, Award, CircleDot } from "lucide-react";
 import { Link } from "wouter";
 import LiquidBackground from "@/components/LiquidBackground";
 import Magnetic from "@/components/Magnetic";
