@@ -429,30 +429,45 @@ export default function Machines() {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {equipmentHighlights.map((item, i) => (
-              <ScrollReveal key={item.title} direction="up" delay={i * 0.15} scale>
-                <div className="group relative overflow-hidden rounded-2xl md:rounded-3xl h-full">
-                  <div className="aspect-[4/5]">
-                    <img 
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                  </div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-foreground/60 text-sm md:text-base leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+            {equipmentHighlights.map((item, i) => {
+              const linkMap: Record<string, string> = {
+                "Scales & Timers": "/scales-timers",
+                "Kettles": "/kettles",
+                "Tampers & Tools": "/tampers-tools"
+              };
+              const href = linkMap[item.title] || "#";
+              
+              return (
+                <ScrollReveal key={item.title} direction="up" delay={i * 0.15} scale>
+                  <Link href={href}>
+                    <div className="group relative overflow-hidden rounded-2xl md:rounded-3xl h-full cursor-pointer">
+                      <div className="aspect-[4/5]">
+                        <img 
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                      </div>
+                      
+                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                        <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-2 group-hover:text-primary transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-foreground/60 text-sm md:text-base leading-relaxed mb-3">
+                          {item.description}
+                        </p>
+                        <span className="inline-flex items-center gap-2 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                          Learn More
+                          <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>

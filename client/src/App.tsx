@@ -11,6 +11,9 @@ import Space from "@/pages/Space";
 import Craft from "@/pages/Craft";
 import ExploreProcess from "@/pages/ExploreProcess";
 import Machines from "@/pages/Machines";
+import ScalesTimers from "@/pages/ScalesTimers";
+import Kettles from "@/pages/Kettles";
+import TampersTools from "@/pages/TampersTools";
 
 const pageVariants = {
   initial: { opacity: 0, filter: "blur(10px)" },
@@ -85,6 +88,42 @@ function Router() {
             transition={pageTransition}
           >
             <Machines />
+          </motion.div>
+        </Route>
+        <Route path="/scales-timers">
+          <motion.div
+            key="scales-timers"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <ScalesTimers />
+          </motion.div>
+        </Route>
+        <Route path="/kettles">
+          <motion.div
+            key="kettles"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <Kettles />
+          </motion.div>
+        </Route>
+        <Route path="/tampers-tools">
+          <motion.div
+            key="tampers-tools"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}
+          >
+            <TampersTools />
           </motion.div>
         </Route>
         <Route path="/">
