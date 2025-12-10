@@ -313,11 +313,13 @@ export default function ExploreProcess() {
                     ref={videoRef}
                     src={activeProcess.videoUrl}
                     className="w-full h-full object-cover"
-                    controls
                     autoPlay
                     loop
                     muted
                     playsInline
+                    disablePictureInPicture
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    onContextMenu={(e) => e.preventDefault()}
                   />
                 </div>
               </motion.div>
