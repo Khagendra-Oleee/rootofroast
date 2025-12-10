@@ -39,21 +39,24 @@ export default function TampersTools() {
       description: "Spring-loaded tampers that click at a preset pressure (typically 30lbs/15kg). Ensures consistent tamping force across every shot, eliminating a major variable.",
       features: ["Preset pressure", "Audible click", "Consistent results", "Beginner-friendly"],
       weight: "15-30 lbs",
-      idealFor: "Consistency, training, home baristas"
+      idealFor: "Consistency, training, home baristas",
+      image: "https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=800&q=80"
     },
     {
       name: "Flat Base Tampers",
       description: "Traditional design with perfectly flat base. The standard for espresso preparation, requiring skill to apply even pressure across the entire puck.",
       features: ["Even distribution", "Professional standard", "Various materials", "Ergonomic handles"],
       weight: "User controlled",
-      idealFor: "Experienced baristas, traditional workflow"
+      idealFor: "Experienced baristas, traditional workflow",
+      image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80"
     },
     {
       name: "Convex/Ripple Tampers",
       description: "Slightly curved or rippled base creates micro-channels for water flow. Some baristas believe this reduces channeling and improves extraction uniformity.",
       features: ["Unique geometry", "Channel prevention", "Experimental design", "Specialty profiles"],
       weight: "User controlled",
-      idealFor: "Experimentation, specific baskets"
+      idealFor: "Experimentation, specific baskets",
+      image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80"
     }
   ];
 
@@ -263,16 +266,27 @@ export default function TampersTools() {
           <div className="space-y-8 md:space-y-12">
             {tamperTypes.map((tamper, i) => (
               <ScrollReveal key={tamper.name} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.1}>
-                <div className="bg-card/50 border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-10 hover:border-primary/30 transition-all duration-300">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
-                    <div>
+                <div className="bg-card/50 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden hover:border-primary/30 transition-all duration-300">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                    {/* Image */}
+                    <div className={`aspect-[4/3] lg:aspect-auto ${i % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <img 
+                        src={tamper.image}
+                        alt={tamper.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className={`p-6 md:p-10 flex flex-col justify-center ${i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
                       <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-4">
                         {tamper.name}
                       </h3>
                       <p className="text-foreground/60 text-base md:text-lg leading-relaxed mb-6">
                         {tamper.description}
                       </p>
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-3 mb-6">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm">
                           <Award className="w-4 h-4" />
                           <span>{tamper.idealFor}</span>
@@ -282,8 +296,7 @@ export default function TampersTools() {
                           <span>Pressure: {tamper.weight}</span>
                         </div>
                       </div>
-                    </div>
-                    <div>
+                      
                       <span className="text-foreground/40 text-xs uppercase tracking-wider mb-4 block">
                         Key Features
                       </span>
@@ -381,6 +394,74 @@ export default function TampersTools() {
         </div>
       </section>
 
+      {/* Tools Showcase */}
+      <section className="py-20 md:py-32 relative z-10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif mb-4">
+                Professional <GradientText text="Workflow" />
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {[
+              { 
+                img: "https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=800&q=80", 
+                title: "Tamping Station",
+                desc: "Professional setup for consistent results"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80", 
+                title: "Espresso Extraction",
+                desc: "Perfect puck preparation in action"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80", 
+                title: "Barista Tools",
+                desc: "Essential equipment for every shot"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&q=80", 
+                title: "Distribution Technique",
+                desc: "Even grounds for uniform extraction"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80", 
+                title: "Precision Dosing",
+                desc: "Accurate measurement every time"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80", 
+                title: "Final Preparation",
+                desc: "Ready for the perfect extraction"
+              }
+            ].map((item, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.1} scale>
+                <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl">
+                  <img 
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                    <h3 className="text-lg md:text-xl font-serif text-white mb-1 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/70 text-xs md:text-sm">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Common Mistakes */}
       <section className="py-20 md:py-32 relative z-10">
         <div className="container mx-auto px-4 md:px-6">
@@ -425,7 +506,14 @@ export default function TampersTools() {
 
       {/* Quote Section */}
       <section className="relative py-24 md:py-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1920&q=80"
+            alt="Espresso preparation"
+            className="w-full h-full object-cover opacity-10"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">

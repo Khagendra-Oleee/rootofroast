@@ -38,19 +38,22 @@ export default function ScalesTimers() {
       name: "Digital Precision Scales",
       description: "High-accuracy scales with 0.1g precision, essential for consistent brewing ratios and recipe development.",
       features: ["0.1g accuracy", "Built-in timer", "Auto-tare function", "Water-resistant"],
-      idealFor: "Pour over, espresso dosing, recipe testing"
+      idealFor: "Pour over, espresso dosing, recipe testing",
+      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80"
     },
     {
       name: "Espresso Scales",
       description: "Compact scales designed to fit under espresso portafilters, with fast response time for real-time extraction monitoring.",
       features: ["0.1g precision", "Fast refresh rate", "Heat-resistant pad", "Shot timer"],
-      idealFor: "Espresso extraction, dose measurement"
+      idealFor: "Espresso extraction, dose measurement",
+      image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80"
     },
     {
       name: "Bluetooth Smart Scales",
       description: "Connected scales that sync with brewing apps, automatically logging your recipes and extraction data.",
       features: ["App connectivity", "Recipe storage", "Guided brewing", "Cloud sync"],
-      idealFor: "Data tracking, recipe refinement, consistency"
+      idealFor: "Data tracking, recipe refinement, consistency",
+      image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&q=80"
     }
   ];
 
@@ -239,21 +242,31 @@ export default function ScalesTimers() {
           <div className="space-y-8 md:space-y-12">
             {scaleTypes.map((scale, i) => (
               <ScrollReveal key={scale.name} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.1}>
-                <div className="bg-card/50 border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-10 hover:border-primary/30 transition-all duration-300">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
-                    <div>
+                <div className="bg-card/50 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden hover:border-primary/30 transition-all duration-300">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                    {/* Image */}
+                    <div className={`aspect-[4/3] lg:aspect-auto ${i % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <img 
+                        src={scale.image}
+                        alt={scale.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className={`p-6 md:p-10 flex flex-col justify-center ${i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
                       <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-4">
                         {scale.name}
                       </h3>
                       <p className="text-foreground/60 text-base md:text-lg leading-relaxed mb-6">
                         {scale.description}
                       </p>
-                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6 w-fit">
                         <Award className="w-4 h-4" />
                         <span>Ideal for: {scale.idealFor}</span>
                       </div>
-                    </div>
-                    <div>
+                      
                       <span className="text-foreground/40 text-xs uppercase tracking-wider mb-4 block">
                         Key Features
                       </span>
@@ -310,7 +323,14 @@ export default function ScalesTimers() {
 
       {/* Quote Section */}
       <section className="relative py-24 md:py-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1920&q=80"
+            alt="Coffee brewing precision"
+            className="w-full h-full object-cover opacity-10"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -330,6 +350,45 @@ export default function ScalesTimers() {
                 — Coffee Science Institute
               </p>
             </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Visual Gallery */}
+      <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif mb-4">
+                Precision in <GradientText text="Action" />
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {[
+              { img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80", title: "Pour Over Setup" },
+              { img: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&q=80", title: "Espresso Dosing" },
+              { img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80", title: "Precision Measurement" },
+              { img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80", title: "Digital Display" },
+              { img: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&q=80", title: "Brewing Process" },
+              { img: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800&q=80", title: "Coffee Preparation" }
+            ].map((item, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.1} scale>
+                <div className="group relative aspect-square overflow-hidden rounded-xl md:rounded-2xl">
+                  <img 
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-white text-sm md:text-base font-medium">{item.title}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>

@@ -39,21 +39,24 @@ export default function Kettles() {
       description: "Variable temperature control with precision spout design. The gold standard for pour-over brewing, offering exact temperature settings and hold functions.",
       features: ["Variable temp (40-100°C)", "±1°C accuracy", "Hold function", "Fast heating"],
       capacity: "0.6-1.2L",
-      idealFor: "Pour over, tea, precision brewing"
+      idealFor: "Pour over, tea, precision brewing",
+      image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80"
     },
     {
       name: "Stovetop Gooseneck",
       description: "Classic design without electronics. Durable stainless steel construction that works on any heat source, favored by purists for its simplicity.",
       features: ["No power needed", "Durable build", "Universal compatibility", "Lightweight"],
       capacity: "0.7-1.5L",
-      idealFor: "Traditional brewing, camping, minimalists"
+      idealFor: "Traditional brewing, camping, minimalists",
+      image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800&q=80"
     },
     {
       name: "Smart Connected Kettles",
       description: "App-controlled kettles with programmable presets and brewing guides. Schedule heating times and save custom temperature profiles.",
       features: ["App control", "Preset profiles", "Scheduling", "Brew guides"],
       capacity: "0.8-1.0L",
-      idealFor: "Tech enthusiasts, recipe consistency"
+      idealFor: "Tech enthusiasts, recipe consistency",
+      image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80"
     }
   ];
 
@@ -231,16 +234,27 @@ export default function Kettles() {
           <div className="space-y-8 md:space-y-12">
             {kettleTypes.map((kettle, i) => (
               <ScrollReveal key={kettle.name} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.1}>
-                <div className="bg-card/50 border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-10 hover:border-primary/30 transition-all duration-300">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
-                    <div>
+                <div className="bg-card/50 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden hover:border-primary/30 transition-all duration-300">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                    {/* Image */}
+                    <div className={`aspect-[4/3] lg:aspect-auto ${i % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <img 
+                        src={kettle.image}
+                        alt={kettle.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className={`p-6 md:p-10 flex flex-col justify-center ${i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
                       <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-4">
                         {kettle.name}
                       </h3>
                       <p className="text-foreground/60 text-base md:text-lg leading-relaxed mb-6">
                         {kettle.description}
                       </p>
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-3 mb-6">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm">
                           <Award className="w-4 h-4" />
                           <span>{kettle.idealFor}</span>
@@ -250,8 +264,7 @@ export default function Kettles() {
                           <span>Capacity: {kettle.capacity}</span>
                         </div>
                       </div>
-                    </div>
-                    <div>
+                      
                       <span className="text-foreground/40 text-xs uppercase tracking-wider mb-4 block">
                         Key Features
                       </span>
@@ -311,7 +324,14 @@ export default function Kettles() {
 
       {/* Quote Section */}
       <section className="relative py-24 md:py-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1920&q=80"
+            alt="Pour over coffee brewing"
+            className="w-full h-full object-cover opacity-10"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -331,6 +351,64 @@ export default function Kettles() {
                 — World Barista Championship
               </p>
             </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Kettle Showcase */}
+      <section className="py-20 md:py-32 relative z-10 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif mb-4">
+                The Art of <GradientText text="Pouring" />
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {[
+              { 
+                img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80", 
+                title: "Pour Over Precision",
+                desc: "Controlled flow rate for optimal extraction"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=1200&q=80", 
+                title: "Temperature Control",
+                desc: "Exact heat for perfect brewing"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80", 
+                title: "Gooseneck Design",
+                desc: "Ergonomic spout for steady pouring"
+              },
+              { 
+                img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80", 
+                title: "Modern Aesthetics",
+                desc: "Form meets function in every detail"
+              }
+            ].map((item, i) => (
+              <ScrollReveal key={i} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.15}>
+                <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl md:rounded-3xl">
+                  <img 
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                    <h3 className="text-xl md:text-2xl font-serif text-white mb-2 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/70 text-sm md:text-base">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
